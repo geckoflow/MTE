@@ -1,6 +1,6 @@
 import type { CollectionConfig, Field } from 'payload'
 
-import { isLoggedIn, publishedOrLoggedIn } from '@/access'
+import { isLoggedIn } from '@/access'
 import { publishedField, slugField, sortOrderField } from '@/fields/slug'
 import { ACCESSORY_VISUALS, ENGRAVING_FONTS, STEP_KEYS, STEP_LABELS, VISUAL_PRESETS } from '@/lib/configurator/types'
 
@@ -119,7 +119,7 @@ export const Products: CollectionConfig = {
   },
   defaultSort: 'sortOrder',
   access: {
-    read: publishedOrLoggedIn,
+    read: isLoggedIn,
     create: isLoggedIn,
     update: isLoggedIn,
     delete: isLoggedIn,

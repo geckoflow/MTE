@@ -16,9 +16,24 @@ test.describe('Kontaktformular', () => {
     await expect(page.locator('.form-status.ok')).toContainText('Danke für deine Nachricht')
   })
 
+  test('Anfragen ohne Ausfüllzeit oder von fremden Seiten werden abgelehnt', async ({ request }) => {
+    const base = { topic: 'allgemein', name: 'Test', email: 't@example.com', message: 'Hallo', consent: true }
+    expect((await request.post('/api/anfrage', { data: base })).status()).toBe(422)
+    const foreign = await request.post('/api/anfrage', { data: { ...base, startedAt: 1 }, headers: { origin: 'https://evil.example' } })
+    expect(foreign.status()).toBe(403)
+  })
+
   test('Honigtopf-Feld blockiert Bots still', async ({ request }) => {
     const res = await request.post('/api/anfrage', {
-      data: { topic: 'allgemein', name: 'Bot', email: 'bot@example.com', message: 'spam', consent: true, website: 'http://spam.example' },
+      data: {
+        topic: 'allgemein',
+        name: 'Bot',
+        email: 'bot@example.com',
+        message: 'spam',
+        consent: true,
+        startedAt: 1,
+        website: 'http://spam.example',
+      },
     })
     expect(res.status()).toBe(200)
   })

@@ -6,7 +6,14 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { blockedOptions, encodeSelection, formatEuro, quote as computeQuote } from '@/lib/configurator/engine'
+import {
+  ENGRAVING_HINT,
+  blockedOptions,
+  encodeSelection,
+  formatEuro,
+  isEngravingAllowed,
+  quote as computeQuote,
+} from '@/lib/configurator/engine'
 import {
   FONT_FAMILIES,
   MOTIF_PATHS,
@@ -289,7 +296,11 @@ export function Configurator(props: ConfiguratorProps) {
     return (
       <div className="group" key={group.key}>
         <label className="switch">
-          <input type="checkbox" checked={v.enabled} onChange={(e) => update(group.key, { ...v, enabled: e.target.checked })} />
+          <input
+            type="checkbox"
+            checked={v.enabled}
+            onChange={(e) => update(group.key, { ...v, enabled: e.target.checked, text: e.target.checked ? v.text : '' })}
+          />
           {group.label}
           <small>{plusPrice(text.priceCents, showPrices)}</small>
         </label>
@@ -306,11 +317,18 @@ export function Configurator(props: ConfiguratorProps) {
                 value={v.text}
                 autoComplete="off"
                 autoFocus
+                aria-invalid={!isEngravingAllowed(v.text)}
+                aria-describedby={`${inputId}-hint`}
                 onChange={(e) => update(group.key, { ...v, text: e.target.value })}
               />
               <span className="counter">
                 {v.text.length} / {text.maxLength}
               </span>
+              {!isEngravingAllowed(v.text) && (
+                <span className="err" id={`${inputId}-hint`} role="alert">
+                  {ENGRAVING_HINT}
+                </span>
+              )}
             </div>
             {text.fonts.length > 1 && (
               <fieldset className="group">

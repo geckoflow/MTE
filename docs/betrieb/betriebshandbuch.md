@@ -15,6 +15,7 @@ flowchart LR
 - **Datenbank:** PostgreSQL 16. Migrationen (`src/migrations`) laufen beim Start automatisch (`prodMigrations`).
 - **Medien:** Volume `/app/media`. Alternativ S3-kompatibler Speicher in der EU (`S3_*`-Variablen).
 - **Health-Check:** `GET /api/health` → `{"ok":true}` (prüft CMS und Datenbank). Wird vom Docker-HEALTHCHECK genutzt.
+- **REST-API:** für Gäste geschlossen. Die Website liest Inhalte serverseitig. Öffentlich sind nur Medien (`/api/media/…`) und die Website-Endpunkte `/api/preis`, `/api/konfiguration`, `/api/anfrage`, `/api/health`.
 
 ## Erstinstallation (Docker Compose)
 
@@ -44,6 +45,7 @@ Alle Variablen sind in [`.env.example`](../../.env.example) beschrieben. Zu beac
 | `SITE_NOINDEX=true` | Für Staging: `robots.txt` sperrt alles, Seiten sind `noindex` |
 | `PLAUSIBLE_DOMAIN`, `PLAUSIBLE_SCRIPT_URL` | Build-Argumente: fließen in die Content-Security-Policy ein, daher nach Änderung neu bauen |
 | `RATE_LIMIT_INQUIRIES` | Anfragen pro IP in 10 Minuten (Standard 5) |
+| `TRUSTED_PROXY_HOPS` | Anzahl der Reverse-Proxys vor der App (Standard 1). Bestimmt, welcher Eintrag aus `X-Forwarded-For` als Client-IP gilt. Bei eigenem Proxy statt Caddy: `X-Forwarded-For` anhängen (nginx: `$proxy_add_x_forwarded_for`) |
 
 ## Updates einspielen
 

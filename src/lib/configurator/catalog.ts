@@ -36,6 +36,19 @@ export function accessoryFromProduct(p: Product): CatalogAccessory {
   }
 }
 
+/** Entfernt alle Preise (für „Preise anzeigen“ = aus), bevor der Katalog an den Browser geht */
+export function withoutPrices(catalog: Catalog): Catalog {
+  return {
+    product: { ...catalog.product, basePriceCents: 0 },
+    groups: catalog.groups.map((g) => ({
+      ...g,
+      options: g.options.map((o) => ({ ...o, priceCents: 0 })),
+      text: g.text ? { ...g.text, priceCents: 0 } : undefined,
+    })),
+    accessories: Object.fromEntries(Object.entries(catalog.accessories).map(([id, a]) => [id, { ...a, priceCents: 0 }])),
+  }
+}
+
 /** Baut aus einem Payload-Produkt (depth ≥ 2) den Konfigurator-Katalog */
 export function buildCatalog(product: Product): Catalog {
   const accessories: Record<string, CatalogAccessory> = {}

@@ -1,5 +1,11 @@
 # Reverse-Proxy mit automatischem HTTPS (Let's Encrypt)
-{$DOMAIN}, www.{$DOMAIN} {
+
+# www → Hauptdomain (Admin-Login und CSRF-Schutz sind an SERVER_URL gebunden)
+www.{$DOMAIN} {
+	redir https://{$DOMAIN}{uri} permanent
+}
+
+{$DOMAIN} {
 	encode zstd gzip
 	reverse_proxy app:3000
 

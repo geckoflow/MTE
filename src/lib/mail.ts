@@ -77,25 +77,31 @@ ${d.configuration ? configTable(d.configuration, true) : ''}
   return { subject: `Neue Anfrage (${d.topicLabel}) – ${d.name}`, html, text }
 }
 
-/** Eingangsbestätigung an die anfragende Person */
+/**
+ * Eingangsbestätigung an die anfragende Person.
+ * Bewusst ohne Name und Nachricht aus dem Formular: Sonst ließe sich das Formular nutzen,
+ * um beliebige Texte über unsere Absender-Domain an fremde Adressen zu schicken.
+ * Die Konfiguration stammt aus dem Katalog (Beschriftung max. 24 geprüfte Zeichen).
+ */
 export function customerMail(d: InquiryMailData, brand: string) {
   const html = wrap(
     'Danke für deine Anfrage',
-    `<p style="font-size:15px;line-height:1.55">Hallo ${esc(d.name)},</p>
+    `<p style="font-size:15px;line-height:1.55">Hallo,</p>
 <p style="font-size:15px;line-height:1.55">danke für deine Nachricht an ${esc(brand)}. Wir haben deine Anfrage erhalten und melden uns so bald wie möglich persönlich bei dir.</p>
 ${d.configuration ? configTable(d.configuration, d.showPrices) : ''}
-${d.message ? `<p style="margin-top:18px;font-size:13px;color:#5d5d63">Deine Nachricht:</p><p style="white-space:pre-wrap;font-size:14px">${esc(d.message)}</p>` : ''}
 <p style="margin-top:24px;font-size:15px">Herzliche Grüße<br>${esc(brand)}</p>
-<p style="margin-top:24px;font-size:11px;color:#8d8d93">Diese E-Mail wurde automatisch versendet. Die Anfrage ist unverbindlich.</p>`,
+<p style="margin-top:24px;font-size:11px;color:#8d8d93">Diese E-Mail wurde automatisch versendet, weil diese Adresse in unserem Anfrageformular angegeben wurde. Falls du keine Anfrage gestellt hast, kannst du sie ignorieren.</p>`,
   )
   const text = [
-    `Hallo ${d.name},`,
+    'Hallo,',
     '',
     `danke für deine Nachricht an ${brand}. Wir haben deine Anfrage erhalten und melden uns so bald wie möglich persönlich bei dir.`,
     d.configuration ? `\n${textConfig(d.configuration, d.showPrices)}` : '',
     '',
-    `Herzliche Grüße`,
+    'Herzliche Grüße',
     brand,
+    '',
+    'Diese E-Mail wurde automatisch versendet, weil diese Adresse in unserem Anfrageformular angegeben wurde.',
   ].join('\n')
   return { subject: `Deine Anfrage bei ${brand}`, html, text }
 }

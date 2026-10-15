@@ -434,6 +434,7 @@ export interface Configuration {
     | boolean
     | null;
   vatMode?: string | null;
+  vatRate?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -802,6 +803,7 @@ export interface ConfigurationsSelect<T extends boolean = true> {
       };
   selection?: T;
   vatMode?: T;
+  vatRate?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1178,6 +1180,8 @@ export interface Craft {
   createdAt?: string | null;
 }
 /**
+ * Nur Administratoren können Einstellungen ändern.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "settings".
  */

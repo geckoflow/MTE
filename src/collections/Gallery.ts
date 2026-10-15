@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { isLoggedIn, publishedOrLoggedIn } from '@/access'
+import { isLoggedIn } from '@/access'
 import { publishedField, sortOrderField } from '@/fields/slug'
 
 export const Gallery: CollectionConfig = {
@@ -13,7 +13,7 @@ export const Gallery: CollectionConfig = {
     description: 'Fertige Unikate für die Galerie-Seite.',
   },
   defaultSort: 'sortOrder',
-  access: { read: publishedOrLoggedIn, create: isLoggedIn, update: isLoggedIn, delete: isLoggedIn },
+  access: { read: isLoggedIn, create: isLoggedIn, update: isLoggedIn, delete: isLoggedIn },
   fields: [
     { name: 'title', label: 'Titel', type: 'text', required: true },
     { name: 'image', label: 'Bild', type: 'upload', relationTo: 'media', required: true },

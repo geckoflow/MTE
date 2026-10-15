@@ -1,13 +1,13 @@
 import type { GlobalConfig } from 'payload'
 
-import { anyone, isLoggedIn } from '@/access'
+import { isLoggedIn } from '@/access'
 import { headingFields } from './Homepage'
 
 export const Craft: GlobalConfig = {
   slug: 'craft',
   label: 'Handwerk & Tradition',
   admin: { group: 'Inhalte' },
-  access: { read: anyone, update: isLoggedIn },
+  access: { read: isLoggedIn, update: isLoggedIn },
   fields: [
     { name: 'eyebrow', label: 'Überzeile', type: 'text' },
     ...headingFields(),

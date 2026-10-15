@@ -6,6 +6,10 @@ import { cache } from 'react'
 
 import type { Craft, Faq, Homepage, LegalPage, Product, Setting } from '@/payload-types'
 
+/**
+ * Alle Abfragen laufen serverseitig über die Local API (Server-Rechte). Öffentlich sichtbar ist nur,
+ * was hier explizit gefiltert wird (z. B. `published`). Die REST-API ist für Gäste geschlossen.
+ */
 export const getPayloadClient = cache(() => getPayload({ config }))
 
 export const getSettings = cache(async (): Promise<Setting> => {
@@ -31,7 +35,6 @@ export const getProducts = cache(async (type?: Product['type']): Promise<Product
     sort: 'sortOrder',
     depth: 1,
     limit: 100,
-    overrideAccess: false,
   })
   return docs
 })
@@ -45,7 +48,6 @@ export const getProductBySlug = cache(async (slug: string, type?: Product['type'
     },
     depth: 2,
     limit: 1,
-    overrideAccess: false,
   })
   return docs[0] ?? null
 })
@@ -60,7 +62,6 @@ export const getConfigurableProducts = cache(async (): Promise<Product[]> => {
     sort: 'sortOrder',
     depth: 2,
     limit: 20,
-    overrideAccess: false,
   })
   return docs
 })
@@ -72,7 +73,6 @@ export const getFaqs = cache(async (onlyHome = false): Promise<Faq[]> => {
     where: { and: [{ published: { equals: true } }, ...(onlyHome ? [{ showOnHome: { equals: true } }] : [])] },
     sort: 'sortOrder',
     limit: 100,
-    overrideAccess: false,
   })
   return docs
 })
@@ -85,7 +85,6 @@ export const getGallery = cache(async () => {
     sort: 'sortOrder',
     depth: 1,
     limit: 200,
-    overrideAccess: false,
   })
   return docs
 })
@@ -96,7 +95,6 @@ export const getLegalPage = cache(async (slug: string): Promise<LegalPage | null
     collection: 'legal-pages',
     where: { and: [{ slug: { equals: slug } }, { published: { equals: true } }] },
     limit: 1,
-    overrideAccess: false,
   })
   return docs[0] ?? null
 })
@@ -109,7 +107,6 @@ export const getLegalPages = cache(async () => {
     sort: 'title',
     limit: 50,
     depth: 0,
-    overrideAccess: false,
   })
   return docs
 })

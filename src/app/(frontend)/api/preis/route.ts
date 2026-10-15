@@ -22,6 +22,9 @@ export async function POST(req: Request) {
     ok: result.ok,
     errors: result.ok ? [] : result.errors,
     selection: result.selection,
-    quote: settings.showPrices === false ? { ...q, lines: q.lines.map((l) => ({ ...l, amountCents: 0 })), totalCents: 0 } : q,
+    quote:
+      settings.showPrices === false
+        ? { ...q, lines: q.lines.map((l) => ({ ...l, amountCents: 0 })), totalCents: 0, vat: { ...q.vat, includedCents: 0 } }
+        : q,
   })
 }

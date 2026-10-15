@@ -1,3 +1,5 @@
+import { headers } from 'next/headers'
+import { notFound } from 'next/navigation'
 import { ImageResponse } from 'next/og'
 
 import { buildCatalog } from '@/lib/configurator/catalog'
@@ -5,6 +7,7 @@ import { normalizeCode } from '@/lib/configurator/code'
 import { formatEuro, validateSelection } from '@/lib/configurator/engine'
 import { DEFAULT_VISUAL, visualStateFrom } from '@/lib/configurator/illustration'
 import { getPayloadClient } from '@/lib/data'
+import { clientIp, rateLimit } from '@/lib/http'
 import { satoriFonts } from '@/lib/render/assets'
 import { IllustrationWithText, logoWhiteDataUri } from '@/lib/render/boeller-image'
 import type { Product } from '@/payload-types'
@@ -17,18 +20,19 @@ export const contentType = 'image/png'
 export default async function Image({ params }: { params: Promise<{ code: string }> }) {
   const { code: raw } = await params
   const code = normalizeCode(raw)
+  if (!code) notFound()
+  if (!rateLimit(`og:${clientIp(await headers())}`, 30, 10 * 60_000)) return new Response('Zu viele Anfragen.', { status: 429 })
   const payload = await getPayloadClient()
-  const config = code
-    ? (await payload.find({ collection: 'configurations', where: { code: { equals: code } }, depth: 2, limit: 1 })).docs[0]
-    : undefined
+  const config = (await payload.find({ collection: 'configurations', where: { code: { equals: code } }, depth: 2, limit: 1 })).docs[0]
+  if (!config) notFound()
   const settings = await payload.findGlobal({ slug: 'settings' })
   let state = DEFAULT_VISUAL
-  if (config && typeof config.product === 'object' && config.product) {
+  if (typeof config.product === 'object' && config.product) {
     const catalog = buildCatalog(config.product as Product)
     state = visualStateFrom(catalog, validateSelection(catalog, config.selection).selection)
   }
   const logo = await logoWhiteDataUri()
-  const showPrice = settings.showPrices !== false && config?.total
+  const showPrice = settings.showPrices !== false && config.total
 
   return new ImageResponse(
     (

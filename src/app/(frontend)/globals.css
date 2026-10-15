@@ -331,6 +331,7 @@ figure {
   clip-path: inset(0 0 0 0);
   transition: clip-path 1s cubic-bezier(0.77, 0, 0.18, 1);
 }
+html:not(.js) .intro,
 .intro-seen .intro {
   display: none;
 }
@@ -631,10 +632,12 @@ figure {
 }
 .hero h1 .line > span {
   display: inline-block;
-  transform: translateY(105%);
   transition: transform 1.1s var(--ease);
 }
-.ready .hero h1 .line > span {
+.js .hero h1 .line > span {
+  transform: translateY(105%);
+}
+.js .ready .hero h1 .line > span {
   transform: none;
 }
 .ready .hero h1 .line:nth-child(2) > span {

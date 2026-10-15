@@ -47,6 +47,8 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
   serverExternalPackages: ['@react-pdf/renderer'],
+  // Eigene 404-Seite auch für URLs außerhalb aller Routen (zwei Root-Layouts: Website + Admin)
+  experimental: { globalNotFound: true },
   // Nur Laufzeit-Dateien ins Standalone-Paket (Docker-Image) übernehmen
   outputFileTracingExcludes: {
     '*': ['docs/**', 'prototype/**', 'tests/**', 'media/**', 'deploy/**', '.github/**', 'playwright-report/**', 'test-results/**', '*.md'],

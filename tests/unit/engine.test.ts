@@ -73,6 +73,12 @@ describe('validateSelection', () => {
     expect(validateSelection(catalog, { beschriftung: { enabled: true, text: 'Test', font: 'comic' } }).ok).toBe(false)
   })
 
+  it('verwirft den Text einer ausgeschalteten Beschriftung ohne Fehler', () => {
+    const r = validateSelection(catalog, { beschriftung: { enabled: false, text: 'Anna@Verein', font: 'antiqua' } })
+    expect(r.ok).toBe(true)
+    expect(r.selection.beschriftung).toEqual({ enabled: false, text: '', font: 'antiqua' })
+  })
+
   it('behandelt leeren Text als „keine Beschriftung“', () => {
     const r = validateSelection(catalog, { beschriftung: { enabled: true, text: '   ', font: 'antiqua' } })
     expect(r.ok).toBe(true)

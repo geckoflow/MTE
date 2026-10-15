@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { isLoggedIn, publishedOrLoggedIn } from '@/access'
+import { isLoggedIn } from '@/access'
 import { publishedField, sortOrderField } from '@/fields/slug'
 
 export const FAQ_CATEGORIES = [
@@ -20,7 +20,7 @@ export const Faqs: CollectionConfig = {
     group: 'Inhalte',
   },
   defaultSort: 'sortOrder',
-  access: { read: publishedOrLoggedIn, create: isLoggedIn, update: isLoggedIn, delete: isLoggedIn },
+  access: { read: isLoggedIn, create: isLoggedIn, update: isLoggedIn, delete: isLoggedIn },
   fields: [
     { name: 'question', label: 'Frage', type: 'text', required: true },
     { name: 'answer', label: 'Antwort', type: 'textarea', required: true },

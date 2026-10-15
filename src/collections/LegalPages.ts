@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { isLoggedIn, publishedOrLoggedIn } from '@/access'
+import { isLoggedIn } from '@/access'
 import { publishedField, slugField } from '@/fields/slug'
 
 /** Rechtstexte: Impressum, Datenschutz, später AGB/Widerruf (Phase 2) */
@@ -13,7 +13,7 @@ export const LegalPages: CollectionConfig = {
     group: 'Inhalte',
     description: 'Erreichbar unter /<URL-Kürzel>, z. B. /impressum. Inhalte vor dem Go-live rechtlich prüfen lassen.',
   },
-  access: { read: publishedOrLoggedIn, create: isLoggedIn, update: isLoggedIn, delete: isLoggedIn },
+  access: { read: isLoggedIn, create: isLoggedIn, update: isLoggedIn, delete: isLoggedIn },
   fields: [
     { name: 'title', label: 'Titel', type: 'text', required: true },
     { name: 'content', label: 'Inhalt', type: 'richText', required: true },

@@ -1,12 +1,12 @@
 import type { GlobalConfig } from 'payload'
 
-import { anyone, isLoggedIn } from '@/access'
+import { isAdmin, isLoggedIn } from '@/access'
 
 export const Settings: GlobalConfig = {
   slug: 'settings',
   label: 'Einstellungen',
-  admin: { group: 'Verwaltung' },
-  access: { read: anyone, update: isLoggedIn },
+  admin: { group: 'Verwaltung', description: 'Nur Administratoren können Einstellungen ändern.' },
+  access: { read: isLoggedIn, update: isAdmin },
   fields: [
     {
       type: 'tabs',

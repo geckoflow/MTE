@@ -160,6 +160,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"total" numeric,
   	"selection" jsonb,
   	"vat_mode" varchar,
+  	"vat_rate" numeric,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );

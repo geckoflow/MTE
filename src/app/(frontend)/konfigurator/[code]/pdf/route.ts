@@ -33,7 +33,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ code: st
         totalCents: Math.round((config.total ?? 0) * 100),
         vat: {
           mode: (config.vatMode as 'regel' | 'kleinunternehmer') ?? 'regel',
-          rate: settings.vatRate ?? 20,
+          rate: config.vatRate ?? settings.vatRate ?? 20,
           includedCents: 0,
         },
       }

@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { Configurator } from '@/components/configurator/Configurator'
-import { buildCatalog } from '@/lib/configurator/catalog'
+import { buildCatalog, withoutPrices } from '@/lib/configurator/catalog'
 import { normalizeCode } from '@/lib/configurator/code'
-import { quote, validateSelection } from '@/lib/configurator/engine'
+import { formatEuro, quote, validateSelection } from '@/lib/configurator/engine'
 import { getConfigurableProducts, getConfigurationByCode, getSettings, priceSettings, vatNote } from '@/lib/data'
 
 type Props = { params: Promise<{ code: string }> }
@@ -30,7 +31,40 @@ export default async function SavedConfigurationPage({ params }: Props) {
   if (!config) notFound()
   const productId = typeof config.product === 'object' ? config.product?.id : config.product
   const product = products.find((p) => p.id === productId)
-  if (!product) notFound()
+  const { showPrices: show } = priceSettings(settings)
+  if (!product) {
+    // Modell wird nicht mehr angeboten: gespeicherte Momentaufnahme zeigen statt 404 (Link aus der Bestätigungsmail)
+    return (
+      <section className="section">
+        <div className="wrap" style={{ maxWidth: 820 }}>
+          <p className="eyebrow">Konfiguration {config.code}</p>
+          <h1 className="h-l" style={{ margin: '22px 0 24px' }}>
+            {config.productName}
+          </h1>
+          <p className="konfig-notice">Dieses Modell wird derzeit nicht im Konfigurator angeboten. Hier siehst du deine gespeicherte Auswahl.</p>
+          <ul className="spec-list" style={{ marginTop: 24 }}>
+            {(config.lines ?? []).map((l, i) => (
+              <li key={l.id ?? i}>
+                <span>
+                  {l.label}
+                  {l.detail ? ` – ${l.detail}` : ''}
+                </span>
+                <span>{show ? (l.amount ? formatEuro(Math.round(l.amount * 100)) : 'inklusive') : ''}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="cta-row" style={{ marginTop: 32 }}>
+            <Link className="btn btn-light" href={`/kontakt?thema=sonderwunsch&produkt=${encodeURIComponent(`Konfiguration ${config.code}`)}`}>
+              Dazu anfragen
+            </Link>
+            <Link className="btn btn-ghost" href="/konfigurator">
+              Neu konfigurieren
+            </Link>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   const catalog = buildCatalog(product)
   const { selection, ok } = validateSelection(catalog, config.selection)
@@ -43,7 +77,7 @@ export default async function SavedConfigurationPage({ params }: Props) {
 
   return (
     <Configurator
-      catalog={catalog}
+      catalog={showPrices ? catalog : withoutPrices(catalog)}
       products={products.map((p) => ({ slug: p.slug ?? String(p.id), name: p.name }))}
       showPrices={showPrices}
       vat={vat}

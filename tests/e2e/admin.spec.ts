@@ -5,7 +5,7 @@ const password = process.env.SEED_ADMIN_PASSWORD || 'admin-lokal-123'
 
 test('Admin: Anmeldung, deutsche Oberfläche, Anfragen sichtbar', async ({ page, request }) => {
   const created = await request.post('/api/anfrage', {
-    data: { topic: 'allgemein', name: 'Admin Test', email: 'admin-test@example.com', message: 'Test aus dem E2E-Lauf', consent: true },
+    data: { topic: 'allgemein', name: 'Admin Test', email: 'admin-test@example.com', message: 'Test aus dem E2E-Lauf', consent: true, startedAt: 1 },
   })
   expect(created.status()).toBe(201)
 

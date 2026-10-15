@@ -44,6 +44,12 @@ export const Configurations: CollectionConfig = {
       ],
     },
     { name: 'selection', label: 'Auswahl (technisch)', type: 'json', admin: { readOnly: true } },
-    { name: 'vatMode', label: 'USt.-Modus', type: 'text', admin: { readOnly: true } },
+    {
+      type: 'row',
+      fields: [
+        { name: 'vatMode', label: 'USt.-Modus', type: 'text', admin: { readOnly: true } },
+        { name: 'vatRate', label: 'USt.-Satz (%)', type: 'number', admin: { readOnly: true } },
+      ],
+    },
   ],
 }

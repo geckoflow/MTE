@@ -23,6 +23,8 @@ export function sanitizeEngraving(raw: unknown, maxLength: number): string {
     .slice(0, maxLength)
 }
 
+export const ENGRAVING_HINT = 'Erlaubt sind Buchstaben, Ziffern, Leerzeichen und . , \' & - / ( ) ! ? : + #'
+
 export function isEngravingAllowed(text: string): boolean {
   return TEXT_ALLOWED.test(text)
 }
@@ -132,17 +134,22 @@ export function validateSelection(catalog: Catalog, raw: unknown): ValidationRes
           errors.push(`„${group.label}“: ungültige Eingabe.`)
           break
         }
+        const font = settings.fonts.find((f) => f.key === v.font) ?? settings.fonts[0]
+        // Ausgeschaltete Beschriftung: Text verwerfen, nichts prüfen
+        if (!v.enabled) {
+          selection[group.key] = { enabled: false, text: '', font: font?.key ?? '' }
+          break
+        }
         const text = sanitizeEngraving(v.text, settings.maxLength)
         if (typeof v.text === 'string' && v.text.trim().length > settings.maxLength) {
           errors.push(`„${group.label}“: höchstens ${settings.maxLength} Zeichen.`)
         }
         if (!isEngravingAllowed(text)) {
-          errors.push(`„${group.label}“: enthält nicht erlaubte Zeichen.`)
+          errors.push(`„${group.label}“: ${ENGRAVING_HINT}`)
           break
         }
-        const font = settings.fonts.find((f) => f.key === v.font) ?? settings.fonts[0]
         if (v.font !== undefined && font?.key !== v.font) errors.push(`„${group.label}“: unbekannte Schriftart.`)
-        selection[group.key] = { enabled: Boolean(v.enabled) && text.length > 0, text, font: font?.key ?? '' }
+        selection[group.key] = { enabled: text.length > 0, text, font: font?.key ?? '' }
         break
       }
     }

@@ -15,7 +15,7 @@ Die Website pflegst du unter **`https://<deine-domain>/admin`**. Alles, was du d
 | **Inhalte → Galerie** | Fotos fertiger Unikate |
 | **Inhalte → Rechtstexte** | Impressum, Datenschutz (später AGB, Widerruf) |
 | **Inhalte → Medien** | Alle Bilder. Platzhalterbilder sind markiert und vor dem Go-live zu ersetzen |
-| **Verwaltung → Einstellungen** | Kontaktdaten, Empfänger für Anfragen, Preise anzeigen ja/nein, Umsatzsteuer, Logo-Intro, Vorschau-Hinweis |
+| **Verwaltung → Einstellungen** | Kontaktdaten, Empfänger für Anfragen, Preise anzeigen ja/nein, Umsatzsteuer, Logo-Intro, Vorschau-Hinweis. Nur für Administratoren änderbar |
 
 ## Häufige Aufgaben
 

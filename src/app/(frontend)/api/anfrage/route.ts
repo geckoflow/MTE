@@ -28,7 +28,7 @@ const schema = z.object({
   message: optionalText(4000),
   consent: z.literal(true, { error: 'Bitte bestätige den Datenschutz-Hinweis.' }),
   website: z.string().optional(),
-  startedAt: z.number().optional(),
+  startedAt: z.number({ error: 'Bitte lade die Seite neu und sende das Formular erneut.' }),
   product: z.string().max(100).optional(),
   selection: z.unknown().optional(),
   sourcePath: z.string().max(200).optional(),
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
 
   // Spam-Schutz: Honigtopf-Feld befüllt → still verwerfen
   if (data.website) return json({ ok: true })
-  if (data.startedAt && Date.now() - data.startedAt < MIN_FILL_MS) {
+  if (Date.now() - data.startedAt < MIN_FILL_MS) {
     return json({ error: 'Das ging sehr schnell – bitte sende das Formular noch einmal.' }, 422)
   }
   if (data.topic !== 'konfiguration' && !data.message) {

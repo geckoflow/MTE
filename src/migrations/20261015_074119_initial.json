@@ -1612,6 +1612,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "vat_rate": {
+          "name": "vat_rate",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp(3) with time zone",
@@ -5525,6 +5531,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "7adc0e22-b006-4b04-8552-1555afa8ce96",
+  "id": "b97c6bc2-71af-4548-8f79-6ce3ed7d9ac9",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

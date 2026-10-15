@@ -1,6 +1,6 @@
 import type { Field, GlobalConfig } from 'payload'
 
-import { anyone, isLoggedIn } from '@/access'
+import { isLoggedIn } from '@/access'
 
 /** Überschrift mit hervorgehobenem (Kontur-)Teil, z. B. „Unsere“ + „Schaftböller.“ */
 export const headingFields = (prefix = ''): Field[] => [
@@ -24,7 +24,7 @@ export const Homepage: GlobalConfig = {
   slug: 'homepage',
   label: 'Startseite',
   admin: { group: 'Inhalte' },
-  access: { read: anyone, update: isLoggedIn },
+  access: { read: isLoggedIn, update: isLoggedIn },
   fields: [
     {
       type: 'tabs',

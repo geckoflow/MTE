@@ -42,10 +42,22 @@ test.describe('Website', () => {
     })
   }
 
-  test('unbekannte Seite liefert 404', async ({ page }) => {
-    const res = await page.goto('/diese-seite-gibt-es-nicht')
-    expect(res?.status()).toBe(404)
-    await expect(page.getByRole('heading', { level: 1 })).toContainText(/Hier ist/i)
+  for (const path of ['/diese-seite-gibt-es-nicht', '/schaftboeller/gibt/es/nicht']) {
+    test(`unbekannte Seite ${path} liefert die eigene 404-Seite`, async ({ page }) => {
+      const res = await page.goto(path)
+      expect(res?.status()).toBe(404)
+      await expect(page.getByRole('heading', { level: 1 })).toContainText(/Hier ist/i)
+    })
+  }
+
+  test('REST-API ist für Gäste geschlossen (Preise, Einstellungen, Anfragen)', async ({ request }) => {
+    for (const path of ['/api/products', '/api/globals/settings', '/api/inquiries', '/api/configurations', '/api/users']) {
+      const res = await request.get(path)
+      expect(res.status(), path).toBe(403)
+    }
+    // Bilder bleiben öffentlich
+    const media = await request.get('/api/media')
+    expect(media.ok()).toBeTruthy()
   })
 
   test('SEO: Sitemap, robots.txt, strukturierte Daten und Sicherheits-Header', async ({ page, request }) => {

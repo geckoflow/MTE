@@ -21,7 +21,6 @@ export async function loadConfigurable(payload: Payload, slugOrId?: string | nul
     sort: 'sortOrder',
     depth: 2,
     limit: 1,
-    overrideAccess: false,
   })
   const product = docs[0]
   return product ? { product, catalog: buildCatalog(product) } : null
@@ -66,6 +65,7 @@ export async function saveConfiguration(
           lines: q.lines.map((l) => ({ label: l.label, detail: l.detail, amount: l.amountCents / 100 })),
           selection: result.selection,
           vatMode: q.vat.mode,
+          vatRate: q.vat.rate,
         },
       })
       id = doc.id as number

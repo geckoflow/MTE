@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { Configurator } from '@/components/configurator/Configurator'
-import { buildCatalog } from '@/lib/configurator/catalog'
+import { buildCatalog, withoutPrices } from '@/lib/configurator/catalog'
 import { decodeSelection, validateSelection } from '@/lib/configurator/engine'
 import { getConfigurableProducts, getSettings, priceSettings, vatNote } from '@/lib/data'
 import { pageMetadata } from '@/lib/seo'
@@ -38,7 +38,7 @@ export default async function KonfiguratorPage({ searchParams }: Props) {
 
   return (
     <Configurator
-      catalog={catalog}
+      catalog={showPrices ? catalog : withoutPrices(catalog)}
       products={products.map((p) => ({ slug: p.slug ?? String(p.id), name: p.name }))}
       showPrices={showPrices}
       vat={vat}
