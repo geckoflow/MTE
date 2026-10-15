@@ -1,0 +1,15 @@
+# Reverse-Proxy mit automatischem HTTPS (Let's Encrypt)
+{$DOMAIN}, www.{$DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:3000
+
+	# Uploads bis 25 MB (siehe payload.config.ts)
+	request_body {
+		max_size 26MB
+	}
+
+	log {
+		output stdout
+		format console
+	}
+}

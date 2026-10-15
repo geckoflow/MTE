@@ -1,0 +1,4 @@
+/* Anpassungen der Admin-Oberfläche */
+html[data-theme='dark'] .sbe-admin-logo {
+  filter: invert(1);
+}
