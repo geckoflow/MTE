@@ -30,6 +30,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env.production
 
 # vercel
 .vercel
@@ -49,7 +50,8 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 
-# lokale Daten
+# lokale Daten (SQLite-Datenbank, Uploads)
+/data
 /media
 /public/media
 .env

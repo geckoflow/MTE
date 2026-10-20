@@ -18,7 +18,7 @@
 
 ## Technik (gecko-flow)
 - [ ] Domain registriert, DNS gesetzt, `SERVER_URL`/`DOMAIN` korrekt, HTTPS aktiv (Caddy)
-- [ ] `PAYLOAD_SECRET` und `POSTGRES_PASSWORD` zufällig erzeugt und sicher abgelegt
+- [ ] `PAYLOAD_SECRET` zufällig erzeugt und sicher abgelegt
 - [ ] **SMTP** eingerichtet, SPF/DKIM/DMARC für die Absender-Domain gesetzt, Testanfrage kommt an (inkl. PDF) und die Bestätigung beim Kunden ebenso
 - [ ] `SEED_ON_INIT=false`, Seed-Admin-Passwort geändert bzw. entfernt, persönliche Benutzerkonten angelegt
 - [ ] Backup-Cron aktiv, externe Kopie eingerichtet, Wiederherstellung einmal getestet

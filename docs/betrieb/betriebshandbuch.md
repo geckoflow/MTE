@@ -6,13 +6,14 @@
 flowchart LR
   B[Browser] -->|HTTPS| C[Caddy<br/>TLS, gzip/zstd]
   C --> A[App-Container<br/>Next.js + Payload]
-  A --> P[(PostgreSQL 16)]
+  A --> P[(SQLite-Datei<br/>Volume data)]
   A --> M[(Medien-Volume<br/>oder S3)]
   A --> S[SMTP<br/>Anfrage-Mails]
 ```
 
 - **App:** ein Container (`node server.js`) mit Website, Admin (`/admin`) und API. Er läuft als Benutzer `nextjs` (uid 1001).
-- **Datenbank:** PostgreSQL 16. Migrationen (`src/migrations`) laufen beim Start automatisch (`prodMigrations`).
+- **Datenbank:** SQLite (libSQL) als Datei `/app/data/schaftboeller.db` im Volume `data`, im WAL-Modus (daneben liegen `-wal` und `-shm`). Die Datei entsteht beim ersten Start, Migrationen (`src/migrations`) laufen beim Start automatisch (`prodMigrations`). Kein eigener Datenbank-Container.
+- **Nur eine Instanz:** SQLite erlaubt einen Schreiber zur selben Zeit und liegt lokal im Volume. Die App deshalb nicht mehrfach parallel starten (keine Replikas). Für das Aufkommen der Manufaktur reicht das deutlich.
 - **Medien:** Volume `/app/media`. Alternativ S3-kompatibler Speicher in der EU (`S3_*`-Variablen).
 - **Health-Check:** `GET /api/health` → `{"ok":true}` (prüft CMS und Datenbank). Wird vom Docker-HEALTHCHECK genutzt.
 - **REST-API:** für Gäste geschlossen. Die Website liest Inhalte serverseitig. Öffentlich sind nur Medien (`/api/media/…`) und die Website-Endpunkte `/api/preis`, `/api/konfiguration`, `/api/anfrage`, `/api/health`.
@@ -23,7 +24,6 @@ flowchart LR
 git clone <repo> /opt/schaftboeller && cd /opt/schaftboeller
 cp .env.example .env.production
 openssl rand -hex 32        # → PAYLOAD_SECRET
-openssl rand -hex 24        # → POSTGRES_PASSWORD
 # .env.production ausfüllen: SERVER_URL, DOMAIN, SMTP_*, MAIL_FROM_*, beim ersten Start SEED_ON_INIT=true + SEED_ADMIN_*
 docker compose --env-file .env.production --profile tls up -d --build
 docker compose --env-file .env.production logs -f app
@@ -40,6 +40,7 @@ Alle Variablen sind in [`.env.example`](../../.env.example) beschrieben. Zu beac
 | Variable | Hinweis |
 |---|---|
 | `SERVER_URL` | Öffentliche Adresse. Wird zur Laufzeit gelesen, dasselbe Image funktioniert für Staging und Produktion |
+| `DATABASE_URL` | Pfad der SQLite-Datei (`file:/pfad/datei.db`). In Docker fest auf `file:/app/data/schaftboeller.db` gesetzt |
 | `PAYLOAD_SECRET` | Nie ändern, sonst werden alle Anmeldungen ungültig |
 | `SMTP_*` | Ohne `SMTP_HOST` werden E-Mails nur ins Log geschrieben |
 | `SITE_NOINDEX=true` | Für Staging: `robots.txt` sperrt alles, Seiten sind `noindex` |
@@ -59,13 +60,23 @@ Migrationen laufen beim Start. Vorher ein Backup ziehen (siehe unten). Abhängig
 
 ## Backups
 
-[`deploy/backup.sh`](../../deploy/backup.sh) sichert die Datenbank (`pg_dump`) und die Medien und behält 14 Stände:
+[`deploy/backup.sh`](../../deploy/backup.sh) sichert die Datenbank und die Medien und behält 14 Stände. Die Datenbank wird im laufenden Betrieb mit `VACUUM INTO` konsistent kopiert (`db_<Datum>.db.gz`). Die Datei im Volume **nicht** einfach mit `cp` kopieren, solange die App läuft: Ein Teil der Daten steht dann noch in der `-wal`-Datei.
 
 ```cron
 15 3 * * * cd /opt/schaftboeller && ./deploy/backup.sh >> /var/log/schaftboeller-backup.log 2>&1
 ```
 
-**Wichtig:** Das Backup-Verzeichnis zusätzlich extern sichern (z. B. Storage-Box, `restic`). Die Wiederherstellung steht am Ende des Skripts. Mindestens einmal pro Quartal testweise wiederherstellen.
+**Wichtig:** Das Backup-Verzeichnis zusätzlich extern sichern (z. B. Storage-Box, `restic`). Mindestens einmal pro Quartal testweise wiederherstellen.
+
+Wiederherstellen (im Verzeichnis `/opt/schaftboeller`, steht auch am Ende des Skripts). Dabei die alten `-wal`/`-shm`-Dateien löschen, sonst spielt SQLite veraltete Änderungen auf die zurückgeholte Datei:
+
+```bash
+docker compose --env-file .env.production stop app
+gunzip -c /var/backups/schaftboeller/db_<STAMP>.db.gz | docker compose --env-file .env.production run --rm -T --no-deps app \
+  sh -c 'rm -f /app/data/schaftboeller.db-wal /app/data/schaftboeller.db-shm && cat > /app/data/schaftboeller.db'
+docker compose --env-file .env.production run --rm -T --no-deps app tar -C /app -xzf - < /var/backups/schaftboeller/media_<STAMP>.tar.gz
+docker compose --env-file .env.production start app
+```
 
 ## Monitoring
 

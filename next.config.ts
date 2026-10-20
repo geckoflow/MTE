@@ -51,7 +51,7 @@ const nextConfig: NextConfig = {
   experimental: { globalNotFound: true },
   // Nur Laufzeit-Dateien ins Standalone-Paket (Docker-Image) übernehmen
   outputFileTracingExcludes: {
-    '*': ['docs/**', 'prototype/**', 'tests/**', 'media/**', 'deploy/**', '.github/**', 'playwright-report/**', 'test-results/**', '*.md'],
+    '*': ['docs/**', 'prototype/**', 'tests/**', 'data/**', 'media/**', 'deploy/**', '.github/**', 'playwright-report/**', 'test-results/**', '*.md'],
   },
   async headers() {
     return [

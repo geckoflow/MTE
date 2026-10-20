@@ -16,7 +16,7 @@
   - **Phase 1:** Website mit Konfigurator und **Anfrage**.
   - **Phase 2:** Echter **Shop** mit Warenkorb und Bestellung.
   - Daten, Preislogik und Konfigurationen sind von Anfang an so gebaut, dass der Shop eine **Erweiterung ist und kein Neubau**.
-- **Technik:** Next.js und Payload CMS (TypeScript, PostgreSQL), selbst gehostet in der EU. David pflegt Produkte, Preise, Optionen und Bilder selbst. Bewusst **kein WordPress/WooCommerce und kein Shopify** (Begründung in Kapitel 10).
+- **Technik:** Next.js und Payload CMS (TypeScript, SQLite), selbst gehostet in der EU. David pflegt Produkte, Preise, Optionen und Bilder selbst. Bewusst **kein WordPress/WooCommerce und kein Shopify** (Begründung in Kapitel 10).
 - **Größtes Risiko:** die **rechtliche Einordnung** des Schaftböllers: Prangerstutzen nach Waffengesetz oder Böller nach Pyrotechnikgesetz? Daran hängen Beschuss, Gewerbe, Versand und Zahlungsanbieter.
   - PayPal, Shopify Payments, Stripe und Klarna schließen Waffen aus oder schränken sie ein.
   - **Phase 1 ist davon kaum betroffen**, Phase 2 hängt daran.
@@ -392,7 +392,7 @@ Dazu kommen Entwürfe und Vorschau vor dem Veröffentlichen, Versionen, Rollen (
 |---|---|---|
 | Framework | **Next.js** (App Router, React Server Components, TypeScript) | Serverseitiges Rendern (SEO, schnelle Ladezeit), Bildoptimierung, API und Frontend in einer Codebasis |
 | CMS und Backend | **Payload CMS 3** (Open Source, läuft *in* der Next.js-App) | Deutsches Admin-Interface, frei modellierbare Daten (ideal für Konfigurator-Optionen und Regeln), Entwürfe und Vorschau, Rollen. E-Commerce ist im Payload-Ökosystem ergänzbar (offizielles E-Commerce-Template bzw. eigene Bestell-Sammlung) |
-| Datenbank | **PostgreSQL** | Zuverlässig, Standard |
+| Datenbank | **SQLite** (lokale Datei, WAL-Modus) | Kein eigener Datenbank-Server, Backup = eine Datei, für das Aufkommen einer Manufaktur mehr als ausreichend. Einschränkung: nur eine App-Instanz. Ein späterer Wechsel auf PostgreSQL ist mit Payload möglich (anderer Adapter, Daten einmalig übertragen) |
 | Medien | S3-kompatibler Speicher in der EU, Bildverarbeitung mit `sharp` | Automatische AVIF/WebP-Größen |
 | Styling | CSS mit Design-Tokens (Tailwind CSS 4 oder CSS Modules) | Tokens aus Kapitel 6.2 |
 | Konfigurator | React-Client-Komponente; Zustand in der URL; Preis-Engine als gemeinsames Paket | Teilbar, testbar, eine Wahrheit für den Preis |
@@ -417,7 +417,7 @@ Dazu kommen Entwürfe und Vorschau vor dem Veröffentlichen, Versionen, Rollen (
 flowchart LR
   K[Besucher:in<br/>Browser / Handy] -->|HTML, Bilder| N[Next.js-App<br/>Website + Konfigurator]
   N <--> P[Payload CMS<br/>Admin für David]
-  P --> DB[(PostgreSQL)]
+  P --> DB[(SQLite)]
   P --> M[(Medien<br/>S3, EU)]
   N --> Q[Preis-Engine<br/>serverseitig]
   N --> E[E-Mail-Versand<br/>Anfragen, Bestätigungen]

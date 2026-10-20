@@ -1,9 +1,10 @@
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { de } from '@payloadcms/translations/languages/de'
+import fs from 'fs'
 import path from 'path'
 import { buildConfig, type Plugin } from 'payload'
 import sharp from 'sharp'
@@ -29,6 +30,12 @@ const dirname = path.dirname(filename)
 
 const serverURL = SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
+
+// Lokale SQLite-Datei, z. B. DATABASE_URL=file:/app/data/schaftboeller.db (Standard: ./data/schaftboeller.db)
+const databaseUrl = process.env.DATABASE_URL || `file:${path.resolve(process.cwd(), 'data/schaftboeller.db')}`
+if (databaseUrl.startsWith('file:')) {
+  fs.mkdirSync(path.dirname(path.resolve(databaseUrl.slice('file:'.length))), { recursive: true })
+}
 
 const plugins: Plugin[] = [
   seoPlugin({
@@ -92,8 +99,13 @@ export default buildConfig({
   csrf: [serverURL],
   upload: { limits: { fileSize: 25_000_000 } },
   typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
-  db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URL || '' },
+  db: sqliteAdapter({
+    client: { url: databaseUrl },
+    // WAL: Lesen blockiert nicht während des Schreibens; bei Sperren bis zu 5 s warten statt Fehler
+    wal: true,
+    busyTimeout: 5000,
+    // IDs gelöschter Datensätze (z. B. Anfragen) werden nie neu vergeben
+    autoIncrement: true,
     // Lokal: Schema automatisch abgleichen. Produktion: versionierte Migrationen beim Start.
     push: !isProduction && process.env.PAYLOAD_DB_PUSH !== 'false',
     migrationDir: path.resolve(dirname, 'migrations'),

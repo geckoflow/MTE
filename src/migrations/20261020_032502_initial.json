@@ -1,72 +1,60 @@
 {
-  "version": "7",
-  "dialect": "postgresql",
+  "version": "6",
+  "dialect": "sqlite",
   "tables": {
-    "public.products_specs": {
+    "products_specs": {
       "name": "products_specs",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "label": {
           "name": "label",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "value": {
           "name": "value",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
         "products_specs_order_idx": {
           "name": "products_specs_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_specs_parent_id_idx": {
           "name": "products_specs_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -86,69 +74,54 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.products_included": {
+    "products_included": {
       "name": "products_included",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "item": {
           "name": "item",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
         "products_included_order_idx": {
           "name": "products_included_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_included_parent_id_idx": {
           "name": "products_included_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -168,38 +141,38 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.products_layers": {
+    "products_layers": {
       "name": "products_layers",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "view": {
           "name": "view",
-          "type": "enum_products_layers_view",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
           "default": "'seite'"
         },
         "z": {
@@ -207,60 +180,38 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 10
         },
         "image_id": {
           "name": "image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
         "products_layers_order_idx": {
           "name": "products_layers_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_layers_parent_id_idx": {
           "name": "products_layers_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_layers_image_idx": {
           "name": "products_layers_image_idx",
           "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -293,92 +244,69 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.products_base_layers": {
+    "products_base_layers": {
       "name": "products_base_layers",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "view": {
           "name": "view",
-          "type": "enum_products_base_layers_view",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'seite'"
         },
         "image_id": {
           "name": "image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "products_base_layers_order_idx": {
           "name": "products_base_layers_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_base_layers_parent_id_idx": {
           "name": "products_base_layers_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_base_layers_image_idx": {
           "name": "products_base_layers_image_idx",
           "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -411,38 +339,38 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.products_option_groups_options_layers": {
+    "products_option_groups_options_layers": {
       "name": "products_option_groups_options_layers",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "view": {
           "name": "view",
-          "type": "enum_products_option_groups_options_layers_view",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'seite'"
         },
         "z": {
@@ -450,60 +378,38 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 10
         },
         "image_id": {
           "name": "image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "products_option_groups_options_layers_order_idx": {
           "name": "products_option_groups_options_layers_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_option_groups_options_layers_parent_id_idx": {
           "name": "products_option_groups_options_layers_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_option_groups_options_layers_image_idx": {
           "name": "products_option_groups_options_layers_image_idx",
           "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -536,137 +442,121 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.products_option_groups_options": {
+    "products_option_groups_options": {
       "name": "products_option_groups_options",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "key": {
           "name": "key",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "label": {
           "name": "label",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "description": {
           "name": "description",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "price": {
           "name": "price",
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 0
         },
         "available": {
           "name": "available",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": true
         },
         "is_default": {
           "name": "is_default",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": false
         },
         "visual": {
           "name": "visual",
-          "type": "enum_products_option_groups_options_visual",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'none'"
         },
         "color": {
           "name": "color",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "image_id": {
           "name": "image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "products_option_groups_options_order_idx": {
           "name": "products_option_groups_options_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_option_groups_options_parent_id_idx": {
           "name": "products_option_groups_options_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_option_groups_options_image_idx": {
           "name": "products_option_groups_options_image_idx",
           "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -699,50 +589,52 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.products_option_groups_text_fonts": {
+    "products_option_groups_text_fonts": {
       "name": "products_option_groups_text_fonts",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "key": {
           "name": "key",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "label": {
           "name": "label",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "font": {
           "name": "font",
-          "type": "enum_products_option_groups_text_fonts_font",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'antiqua'"
         }
       },
@@ -750,32 +642,16 @@
         "products_option_groups_text_fonts_order_idx": {
           "name": "products_option_groups_text_fonts_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_option_groups_text_fonts_parent_id_idx": {
           "name": "products_option_groups_text_fonts_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -795,78 +671,83 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.products_option_groups": {
+    "products_option_groups": {
       "name": "products_option_groups",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "key": {
           "name": "key",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "label": {
           "name": "label",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "step": {
           "name": "step",
-          "type": "enum_products_option_groups_step",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'schaft'"
         },
         "kind": {
           "name": "kind",
-          "type": "enum_products_option_groups_kind",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'single'"
         },
         "required": {
           "name": "required",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": false
         },
         "help": {
           "name": "help",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "text_price": {
           "name": "text_price",
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 0
         },
         "text_max_length": {
@@ -874,45 +755,31 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 24
         },
         "text_placeholder": {
           "name": "text_placeholder",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "products_option_groups_order_idx": {
           "name": "products_option_groups_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_option_groups_parent_id_idx": {
           "name": "products_option_groups_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -932,106 +799,115 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.products": {
+    "products": {
       "name": "products",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "name": {
           "name": "name",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "type": {
           "name": "type",
-          "type": "enum_products_type",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
           "default": "'zubehoer'"
         },
         "tagline": {
           "name": "tagline",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "description": {
           "name": "description",
-          "type": "jsonb",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "price": {
           "name": "price",
           "type": "numeric",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
           "default": 0
         },
         "price_from": {
           "name": "price_from",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": false
         },
         "price_note": {
           "name": "price_note",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "available": {
           "name": "available",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": true
         },
         "featured": {
           "name": "featured",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": false
         },
         "lead_time": {
           "name": "lead_time",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "illustration": {
           "name": "illustration",
-          "type": "enum_products_illustration",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'none'"
         },
         "configurable": {
           "name": "configurable",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": false
         },
         "base_label": {
           "name": "base_label",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'Grundpreis'"
         },
         "text_area_x": {
@@ -1039,6 +915,7 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 40
         },
         "text_area_y": {
@@ -1046,6 +923,7 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 42
         },
         "text_area_width": {
@@ -1053,6 +931,7 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 30
         },
         "text_area_rotate": {
@@ -1060,19 +939,22 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 0
         },
         "slug": {
           "name": "slug",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "published": {
           "name": "published",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": true
         },
         "sort_order": {
@@ -1080,131 +962,89 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 100
         },
         "meta_title": {
           "name": "meta_title",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "meta_description": {
           "name": "meta_description",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "meta_image_id": {
           "name": "meta_image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         }
       },
       "indexes": {
         "products_type_idx": {
           "name": "products_type_idx",
           "columns": [
-            {
-              "expression": "type",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "type"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_slug_idx": {
           "name": "products_slug_idx",
           "columns": [
-            {
-              "expression": "slug",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "slug"
           ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": true
         },
         "products_published_idx": {
           "name": "products_published_idx",
           "columns": [
-            {
-              "expression": "published",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "published"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_meta_meta_image_idx": {
           "name": "products_meta_meta_image_idx",
           "columns": [
-            {
-              "expression": "meta_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "meta_image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_updated_at_idx": {
           "name": "products_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_created_at_idx": {
           "name": "products_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -1224,66 +1064,55 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.products_texts": {
+    "products_texts": {
       "name": "products_texts",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "order": {
           "name": "order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "parent_id": {
           "name": "parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "path": {
           "name": "path",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "text": {
           "name": "text",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "products_texts_order_parent": {
           "name": "products_texts_order_parent",
           "columns": [
-            {
-              "expression": "order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "order",
+            "parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -1303,126 +1132,89 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.products_rels": {
+    "products_rels": {
       "name": "products_rels",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "order": {
           "name": "order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "parent_id": {
           "name": "parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "path": {
           "name": "path",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "media_id": {
           "name": "media_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "products_id": {
           "name": "products_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "products_rels_order_idx": {
           "name": "products_rels_order_idx",
           "columns": [
-            {
-              "expression": "order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_rels_parent_idx": {
           "name": "products_rels_parent_idx",
           "columns": [
-            {
-              "expression": "parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_rels_path_idx": {
           "name": "products_rels_path_idx",
           "columns": [
-            {
-              "expression": "path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "path"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_rels_media_id_idx": {
           "name": "products_rels_media_id_idx",
           "columns": [
-            {
-              "expression": "media_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "media_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "products_rels_products_id_idx": {
           "name": "products_rels_products_id_idx",
           "columns": [
-            {
-              "expression": "products_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "products_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -1468,81 +1260,68 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.configurations_lines": {
+    "configurations_lines": {
       "name": "configurations_lines",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "label": {
           "name": "label",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "detail": {
           "name": "detail",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "amount": {
           "name": "amount",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "configurations_lines_order_idx": {
           "name": "configurations_lines_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "configurations_lines_parent_id_idx": {
           "name": "configurations_lines_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -1562,137 +1341,112 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.configurations": {
+    "configurations": {
       "name": "configurations",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "code": {
           "name": "code",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "product_id": {
           "name": "product_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "product_name": {
           "name": "product_name",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "total": {
           "name": "total",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "selection": {
           "name": "selection",
-          "type": "jsonb",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "vat_mode": {
           "name": "vat_mode",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "vat_rate": {
           "name": "vat_rate",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         }
       },
       "indexes": {
         "configurations_code_idx": {
           "name": "configurations_code_idx",
           "columns": [
-            {
-              "expression": "code",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "code"
           ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": true
         },
         "configurations_product_idx": {
           "name": "configurations_product_idx",
           "columns": [
-            {
-              "expression": "product_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "product_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "configurations_updated_at_idx": {
           "name": "configurations_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "configurations_created_at_idx": {
           "name": "configurations_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -1712,165 +1466,142 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.inquiries": {
+    "inquiries": {
       "name": "inquiries",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "status": {
           "name": "status",
-          "type": "enum_inquiries_status",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
           "default": "'neu'"
         },
         "topic": {
           "name": "topic",
-          "type": "enum_inquiries_topic",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
           "default": "'allgemein'"
         },
         "name": {
           "name": "name",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "email": {
           "name": "email",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "phone": {
           "name": "phone",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "organisation": {
           "name": "organisation",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "message": {
           "name": "message",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "configuration_id": {
           "name": "configuration_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "internal_notes": {
           "name": "internal_notes",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "consent_at": {
           "name": "consent_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "source_path": {
           "name": "source_path",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         }
       },
       "indexes": {
         "inquiries_status_idx": {
           "name": "inquiries_status_idx",
           "columns": [
-            {
-              "expression": "status",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "status"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "inquiries_configuration_idx": {
           "name": "inquiries_configuration_idx",
           "columns": [
-            {
-              "expression": "configuration_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "configuration_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "inquiries_updated_at_idx": {
           "name": "inquiries_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "inquiries_created_at_idx": {
           "name": "inquiries_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -1890,52 +1621,54 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.faqs": {
+    "faqs": {
       "name": "faqs",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "question": {
           "name": "question",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "answer": {
           "name": "answer",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "category": {
           "name": "category",
-          "type": "enum_faqs_category",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'allgemein'"
         },
         "show_on_home": {
           "name": "show_on_home",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": false
         },
         "published": {
           "name": "published",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": true
         },
         "sort_order": {
@@ -1943,116 +1676,98 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 100
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         }
       },
       "indexes": {
         "faqs_published_idx": {
           "name": "faqs_published_idx",
           "columns": [
-            {
-              "expression": "published",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "published"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "faqs_updated_at_idx": {
           "name": "faqs_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "faqs_created_at_idx": {
           "name": "faqs_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.gallery": {
+    "gallery": {
       "name": "gallery",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "title": {
           "name": "title",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "image_id": {
           "name": "image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "description": {
           "name": "description",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "year": {
           "name": "year",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "published": {
           "name": "published",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": true
         },
         "sort_order": {
@@ -2060,83 +1775,54 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 100
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         }
       },
       "indexes": {
         "gallery_image_idx": {
           "name": "gallery_image_idx",
           "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "gallery_published_idx": {
           "name": "gallery_published_idx",
           "columns": [
-            {
-              "expression": "published",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "published"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "gallery_updated_at_idx": {
           "name": "gallery_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "gallery_created_at_idx": {
           "name": "gallery_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -2156,160 +1842,128 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.legal_pages": {
+    "legal_pages": {
       "name": "legal_pages",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "title": {
           "name": "title",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "content": {
           "name": "content",
-          "type": "jsonb",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "show_in_footer": {
           "name": "show_in_footer",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": true
         },
         "slug": {
           "name": "slug",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "published": {
           "name": "published",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": true
         },
         "meta_title": {
           "name": "meta_title",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "meta_description": {
           "name": "meta_description",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "meta_image_id": {
           "name": "meta_image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         }
       },
       "indexes": {
         "legal_pages_slug_idx": {
           "name": "legal_pages_slug_idx",
           "columns": [
-            {
-              "expression": "slug",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "slug"
           ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": true
         },
         "legal_pages_published_idx": {
           "name": "legal_pages_published_idx",
           "columns": [
-            {
-              "expression": "published",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "published"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "legal_pages_meta_meta_image_idx": {
           "name": "legal_pages_meta_meta_image_idx",
           "columns": [
-            {
-              "expression": "meta_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "meta_image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "legal_pages_updated_at_idx": {
           "name": "legal_pages_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "legal_pages_created_at_idx": {
           "name": "legal_pages_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -2329,432 +1983,397 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.media": {
+    "media": {
       "name": "media",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "alt": {
           "name": "alt",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "caption": {
           "name": "caption",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "credit": {
           "name": "credit",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "placeholder": {
           "name": "placeholder",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "url": {
           "name": "url",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "thumbnail_u_r_l": {
           "name": "thumbnail_u_r_l",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "filename": {
           "name": "filename",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "mime_type": {
           "name": "mime_type",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "filesize": {
           "name": "filesize",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "width": {
           "name": "width",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "height": {
           "name": "height",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "focal_x": {
           "name": "focal_x",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "focal_y": {
           "name": "focal_y",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_thumb_url": {
           "name": "sizes_thumb_url",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_thumb_width": {
           "name": "sizes_thumb_width",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_thumb_height": {
           "name": "sizes_thumb_height",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_thumb_mime_type": {
           "name": "sizes_thumb_mime_type",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_thumb_filesize": {
           "name": "sizes_thumb_filesize",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_thumb_filename": {
           "name": "sizes_thumb_filename",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_card_url": {
           "name": "sizes_card_url",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_card_width": {
           "name": "sizes_card_width",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_card_height": {
           "name": "sizes_card_height",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_card_mime_type": {
           "name": "sizes_card_mime_type",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_card_filesize": {
           "name": "sizes_card_filesize",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_card_filename": {
           "name": "sizes_card_filename",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_large_url": {
           "name": "sizes_large_url",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_large_width": {
           "name": "sizes_large_width",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_large_height": {
           "name": "sizes_large_height",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_large_mime_type": {
           "name": "sizes_large_mime_type",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_large_filesize": {
           "name": "sizes_large_filesize",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_large_filename": {
           "name": "sizes_large_filename",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_og_url": {
           "name": "sizes_og_url",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_og_width": {
           "name": "sizes_og_width",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_og_height": {
           "name": "sizes_og_height",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_og_mime_type": {
           "name": "sizes_og_mime_type",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_og_filesize": {
           "name": "sizes_og_filesize",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "sizes_og_filename": {
           "name": "sizes_og_filename",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "media_updated_at_idx": {
           "name": "media_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "media_created_at_idx": {
           "name": "media_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "media_filename_idx": {
           "name": "media_filename_idx",
           "columns": [
-            {
-              "expression": "filename",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "filename"
           ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": true
         },
         "media_sizes_thumb_sizes_thumb_filename_idx": {
           "name": "media_sizes_thumb_sizes_thumb_filename_idx",
           "columns": [
-            {
-              "expression": "sizes_thumb_filename",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "sizes_thumb_filename"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "media_sizes_card_sizes_card_filename_idx": {
           "name": "media_sizes_card_sizes_card_filename_idx",
           "columns": [
-            {
-              "expression": "sizes_card_filename",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "sizes_card_filename"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "media_sizes_large_sizes_large_filename_idx": {
           "name": "media_sizes_large_sizes_large_filename_idx",
           "columns": [
-            {
-              "expression": "sizes_large_filename",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "sizes_large_filename"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "media_sizes_og_sizes_og_filename_idx": {
           "name": "media_sizes_og_sizes_og_filename_idx",
           "columns": [
-            {
-              "expression": "sizes_og_filename",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "sizes_og_filename"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.users_roles": {
+    "users_roles": {
       "name": "users_roles",
-      "schema": "",
       "columns": {
         "order": {
           "name": "order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "parent_id": {
           "name": "parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "value": {
           "name": "value",
-          "type": "enum_users_roles",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         }
       },
       "indexes": {
         "users_roles_order_idx": {
           "name": "users_roles_order_idx",
           "columns": [
-            {
-              "expression": "order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "users_roles_parent_idx": {
           "name": "users_roles_parent_idx",
           "columns": [
-            {
-              "expression": "parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -2774,75 +2393,61 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.users_sessions": {
+    "users_sessions": {
       "name": "users_sessions",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "expires_at": {
           "name": "expires_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
         "users_sessions_order_idx": {
           "name": "users_sessions_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "users_sessions_parent_id_idx": {
           "name": "users_sessions_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -2862,518 +2467,393 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.users": {
+    "users": {
       "name": "users",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "name": {
           "name": "name",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "email": {
           "name": "email",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "reset_password_token": {
           "name": "reset_password_token",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "reset_password_expiration": {
           "name": "reset_password_expiration",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "salt": {
           "name": "salt",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "hash": {
           "name": "hash",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "reset_password_requested_at": {
           "name": "reset_password_requested_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "login_attempts": {
           "name": "login_attempts",
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 0
         },
         "lock_until": {
           "name": "lock_until",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "users_updated_at_idx": {
           "name": "users_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "users_created_at_idx": {
           "name": "users_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "users_email_idx": {
           "name": "users_email_idx",
           "columns": [
-            {
-              "expression": "email",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "email"
           ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": true
         }
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.payload_kv": {
+    "payload_kv": {
       "name": "payload_kv",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "key": {
           "name": "key",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "data": {
           "name": "data",
-          "type": "jsonb",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
         "payload_kv_key_idx": {
           "name": "payload_kv_key_idx",
           "columns": [
-            {
-              "expression": "key",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "key"
           ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": true
         }
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.payload_locked_documents": {
+    "payload_locked_documents": {
       "name": "payload_locked_documents",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "global_slug": {
           "name": "global_slug",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         }
       },
       "indexes": {
         "payload_locked_documents_global_slug_idx": {
           "name": "payload_locked_documents_global_slug_idx",
           "columns": [
-            {
-              "expression": "global_slug",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "global_slug"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_updated_at_idx": {
           "name": "payload_locked_documents_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_created_at_idx": {
           "name": "payload_locked_documents_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.payload_locked_documents_rels": {
+    "payload_locked_documents_rels": {
       "name": "payload_locked_documents_rels",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "order": {
           "name": "order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "parent_id": {
           "name": "parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "path": {
           "name": "path",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "products_id": {
           "name": "products_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "configurations_id": {
           "name": "configurations_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "inquiries_id": {
           "name": "inquiries_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "faqs_id": {
           "name": "faqs_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "gallery_id": {
           "name": "gallery_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "legal_pages_id": {
           "name": "legal_pages_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "media_id": {
           "name": "media_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "users_id": {
           "name": "users_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "payload_locked_documents_rels_order_idx": {
           "name": "payload_locked_documents_rels_order_idx",
           "columns": [
-            {
-              "expression": "order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_rels_parent_idx": {
           "name": "payload_locked_documents_rels_parent_idx",
           "columns": [
-            {
-              "expression": "parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_rels_path_idx": {
           "name": "payload_locked_documents_rels_path_idx",
           "columns": [
-            {
-              "expression": "path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "path"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_rels_products_id_idx": {
           "name": "payload_locked_documents_rels_products_id_idx",
           "columns": [
-            {
-              "expression": "products_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "products_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_rels_configurations_id_idx": {
           "name": "payload_locked_documents_rels_configurations_id_idx",
           "columns": [
-            {
-              "expression": "configurations_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "configurations_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_rels_inquiries_id_idx": {
           "name": "payload_locked_documents_rels_inquiries_id_idx",
           "columns": [
-            {
-              "expression": "inquiries_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "inquiries_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_rels_faqs_id_idx": {
           "name": "payload_locked_documents_rels_faqs_id_idx",
           "columns": [
-            {
-              "expression": "faqs_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "faqs_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_rels_gallery_id_idx": {
           "name": "payload_locked_documents_rels_gallery_id_idx",
           "columns": [
-            {
-              "expression": "gallery_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "gallery_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_rels_legal_pages_id_idx": {
           "name": "payload_locked_documents_rels_legal_pages_id_idx",
           "columns": [
-            {
-              "expression": "legal_pages_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "legal_pages_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_rels_media_id_idx": {
           "name": "payload_locked_documents_rels_media_id_idx",
           "columns": [
-            {
-              "expression": "media_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "media_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_locked_documents_rels_users_id_idx": {
           "name": "payload_locked_documents_rels_users_id_idx",
           "columns": [
-            {
-              "expression": "users_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "users_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -3497,196 +2977,144 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.payload_preferences": {
+    "payload_preferences": {
       "name": "payload_preferences",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "key": {
           "name": "key",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "value": {
           "name": "value",
-          "type": "jsonb",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         }
       },
       "indexes": {
         "payload_preferences_key_idx": {
           "name": "payload_preferences_key_idx",
           "columns": [
-            {
-              "expression": "key",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "key"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_preferences_updated_at_idx": {
           "name": "payload_preferences_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_preferences_created_at_idx": {
           "name": "payload_preferences_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.payload_preferences_rels": {
+    "payload_preferences_rels": {
       "name": "payload_preferences_rels",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "order": {
           "name": "order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "parent_id": {
           "name": "parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "path": {
           "name": "path",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "users_id": {
           "name": "users_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "payload_preferences_rels_order_idx": {
           "name": "payload_preferences_rels_order_idx",
           "columns": [
-            {
-              "expression": "order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_preferences_rels_parent_idx": {
           "name": "payload_preferences_rels_parent_idx",
           "columns": [
-            {
-              "expression": "parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_preferences_rels_path_idx": {
           "name": "payload_preferences_rels_path_idx",
           "columns": [
-            {
-              "expression": "path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "path"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_preferences_rels_users_id_idx": {
           "name": "payload_preferences_rels_users_id_idx",
           "columns": [
-            {
-              "expression": "users_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "users_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -3719,119 +3147,107 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.payload_migrations": {
+    "payload_migrations": {
       "name": "payload_migrations",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "name": {
           "name": "name",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "batch": {
           "name": "batch",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         }
       },
       "indexes": {
         "payload_migrations_updated_at_idx": {
           "name": "payload_migrations_updated_at_idx",
           "columns": [
-            {
-              "expression": "updated_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "updated_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "payload_migrations_created_at_idx": {
           "name": "payload_migrations_created_at_idx",
           "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "created_at"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.homepage_hero_lines": {
+    "homepage_hero_lines": {
       "name": "homepage_hero_lines",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "text": {
           "name": "text",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "outline": {
           "name": "outline",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": false
         }
       },
@@ -3839,32 +3255,16 @@
         "homepage_hero_lines_order_idx": {
           "name": "homepage_hero_lines_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "homepage_hero_lines_parent_id_idx": {
           "name": "homepage_hero_lines_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -3884,69 +3284,54 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.homepage_hero_facts": {
+    "homepage_hero_facts": {
       "name": "homepage_hero_facts",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "text": {
           "name": "text",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
         "homepage_hero_facts_order_idx": {
           "name": "homepage_hero_facts_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "homepage_hero_facts_parent_id_idx": {
           "name": "homepage_hero_facts_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -3966,69 +3351,54 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.homepage_marquee": {
+    "homepage_marquee": {
       "name": "homepage_marquee",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "word": {
           "name": "word",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
         "homepage_marquee_order_idx": {
           "name": "homepage_marquee_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "homepage_marquee_parent_id_idx": {
           "name": "homepage_marquee_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -4048,75 +3418,61 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.homepage_quality_items": {
+    "homepage_quality_items": {
       "name": "homepage_quality_items",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "title": {
           "name": "title",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "text": {
           "name": "text",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
         "homepage_quality_items_order_idx": {
           "name": "homepage_quality_items_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "homepage_quality_items_parent_id_idx": {
           "name": "homepage_quality_items_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -4136,357 +3492,369 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.homepage": {
+    "homepage": {
       "name": "homepage",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "hero_eyebrow": {
           "name": "hero_eyebrow",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "hero_lead": {
           "name": "hero_lead",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "hero_primary_label": {
           "name": "hero_primary_label",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "hero_primary_href": {
           "name": "hero_primary_href",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "hero_secondary_label": {
           "name": "hero_secondary_label",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "hero_secondary_href": {
           "name": "hero_secondary_href",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "hero_image_id": {
           "name": "hero_image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "hero_video_id": {
           "name": "hero_video_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "manufaktur_eyebrow": {
           "name": "manufaktur_eyebrow",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "manufaktur_heading": {
           "name": "manufaktur_heading",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "manufaktur_heading_accent": {
           "name": "manufaktur_heading_accent",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "manufaktur_intro": {
           "name": "manufaktur_intro",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "manufaktur_body": {
           "name": "manufaktur_body",
-          "type": "jsonb",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "manufaktur_quote": {
           "name": "manufaktur_quote",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "quality_eyebrow": {
           "name": "quality_eyebrow",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "quality_heading": {
           "name": "quality_heading",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "quality_heading_accent": {
           "name": "quality_heading_accent",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "quality_lead": {
           "name": "quality_lead",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contrast_line_one": {
           "name": "contrast_line_one",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contrast_line_two": {
           "name": "contrast_line_two",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contrast_left_label": {
           "name": "contrast_left_label",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contrast_right_label": {
           "name": "contrast_right_label",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contrast_left_text": {
           "name": "contrast_left_text",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contrast_right_text": {
           "name": "contrast_right_text",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "products_eyebrow": {
           "name": "products_eyebrow",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "products_heading": {
           "name": "products_heading",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "products_heading_accent": {
           "name": "products_heading_accent",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "products_lead": {
           "name": "products_lead",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "configurator_eyebrow": {
           "name": "configurator_eyebrow",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "configurator_heading": {
           "name": "configurator_heading",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "configurator_heading_accent": {
           "name": "configurator_heading_accent",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "configurator_lead": {
           "name": "configurator_lead",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "unikat_eyebrow": {
           "name": "unikat_eyebrow",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "unikat_heading": {
           "name": "unikat_heading",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "unikat_heading_accent": {
           "name": "unikat_heading_accent",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "unikat_text": {
           "name": "unikat_text",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "unikat_image_id": {
           "name": "unikat_image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contact_eyebrow": {
           "name": "contact_eyebrow",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contact_heading": {
           "name": "contact_heading",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contact_heading_accent": {
           "name": "contact_heading_accent",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contact_lead": {
           "name": "contact_lead",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "meta_title": {
           "name": "meta_title",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "meta_description": {
           "name": "meta_description",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "meta_image_id": {
           "name": "meta_image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "homepage_hero_hero_image_idx": {
           "name": "homepage_hero_hero_image_idx",
           "columns": [
-            {
-              "expression": "hero_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "hero_image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "homepage_hero_hero_video_idx": {
           "name": "homepage_hero_hero_video_idx",
           "columns": [
-            {
-              "expression": "hero_video_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "hero_video_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "homepage_unikat_unikat_image_idx": {
           "name": "homepage_unikat_unikat_image_idx",
           "columns": [
-            {
-              "expression": "unikat_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "unikat_image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "homepage_meta_meta_image_idx": {
           "name": "homepage_meta_meta_image_idx",
           "columns": [
-            {
-              "expression": "meta_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "meta_image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -4545,105 +3913,75 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.homepage_rels": {
+    "homepage_rels": {
       "name": "homepage_rels",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "order": {
           "name": "order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "parent_id": {
           "name": "parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "path": {
           "name": "path",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "media_id": {
           "name": "media_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "homepage_rels_order_idx": {
           "name": "homepage_rels_order_idx",
           "columns": [
-            {
-              "expression": "order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "homepage_rels_parent_idx": {
           "name": "homepage_rels_parent_idx",
           "columns": [
-            {
-              "expression": "parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "homepage_rels_path_idx": {
           "name": "homepage_rels_path_idx",
           "columns": [
-            {
-              "expression": "path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "path"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "homepage_rels_media_id_idx": {
           "name": "homepage_rels_media_id_idx",
           "columns": [
-            {
-              "expression": "media_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "media_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -4676,96 +4014,75 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.craft_steps": {
+    "craft_steps": {
       "name": "craft_steps",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "title": {
           "name": "title",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "text": {
           "name": "text",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "image_id": {
           "name": "image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "craft_steps_order_idx": {
           "name": "craft_steps_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "craft_steps_parent_id_idx": {
           "name": "craft_steps_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "craft_steps_image_idx": {
           "name": "craft_steps_image_idx",
           "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -4798,96 +4115,75 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.craft_materials": {
+    "craft_materials": {
       "name": "craft_materials",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "title": {
           "name": "title",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "text": {
           "name": "text",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "image_id": {
           "name": "image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "craft_materials_order_idx": {
           "name": "craft_materials_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "craft_materials_parent_id_idx": {
           "name": "craft_materials_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "craft_materials_image_idx": {
           "name": "craft_materials_image_idx",
           "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -4920,129 +4216,124 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.craft": {
+    "craft": {
       "name": "craft",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "eyebrow": {
           "name": "eyebrow",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "heading": {
           "name": "heading",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "heading_accent": {
           "name": "heading_accent",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "lead": {
           "name": "lead",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "story_heading": {
           "name": "story_heading",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "story_heading_accent": {
           "name": "story_heading_accent",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "story_body": {
           "name": "story_body",
-          "type": "jsonb",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "story_image_id": {
           "name": "story_image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "meta_title": {
           "name": "meta_title",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "meta_description": {
           "name": "meta_description",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "meta_image_id": {
           "name": "meta_image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "craft_story_story_image_idx": {
           "name": "craft_story_story_image_idx",
           "columns": [
-            {
-              "expression": "story_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "story_image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "craft_meta_meta_image_idx": {
           "name": "craft_meta_meta_image_idx",
           "columns": [
-            {
-              "expression": "meta_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "meta_image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -5075,76 +4366,61 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.settings_social": {
+    "settings_social": {
       "name": "settings_social",
-      "schema": "",
       "columns": {
         "_order": {
           "name": "_order",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "_parent_id": {
           "name": "_parent_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "id": {
           "name": "id",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "network": {
           "name": "network",
-          "type": "enum_settings_social_network",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "url": {
           "name": "url",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
         "settings_social_order_idx": {
           "name": "settings_social_order_idx",
           "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_order"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "settings_social_parent_id_idx": {
           "name": "settings_social_parent_id_idx",
           "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "_parent_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -5164,104 +4440,114 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     },
-    "public.settings": {
+    "settings": {
       "name": "settings",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": true
         },
         "brand_name": {
           "name": "brand_name",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
           "default": "'Schaftböller Ebner'"
         },
         "legal_name": {
           "name": "legal_name",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "contact_person": {
           "name": "contact_person",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'David Ebner'"
         },
         "street": {
           "name": "street",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "zip": {
           "name": "zip",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "city": {
           "name": "city",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'Oberalm'"
         },
         "region": {
           "name": "region",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'Salzburg'"
         },
         "phone": {
           "name": "phone",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "email": {
           "name": "email",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "opening_note": {
           "name": "opening_note",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'Besuche in der Werkstatt nach Terminvereinbarung.'"
         },
         "inquiry_recipient": {
           "name": "inquiry_recipient",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "show_prices": {
           "name": "show_prices",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": true
         },
         "vat_mode": {
           "name": "vat_mode",
-          "type": "enum_settings_vat_mode",
-          "typeSchema": "public",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
           "default": "'regel'"
         },
         "vat_rate": {
@@ -5269,84 +4555,86 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 20
         },
         "lead_time_note": {
           "name": "lead_time_note",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'Fertigung auf Bestellung, Lieferzeit nach Vereinbarung.'"
         },
         "inquiry_note": {
           "name": "inquiry_note",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'Die Anfrage ist unverbindlich. Wir melden uns mit einem Angebot und einem Liefertermin.'"
         },
         "intro_enabled": {
           "name": "intro_enabled",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": true
         },
         "intro_tagline": {
           "name": "intro_tagline",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'Handwerk mit Tradition'"
         },
         "preview_banner": {
           "name": "preview_banner",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": false
         },
         "footer_note": {
           "name": "footer_note",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'Handgefertigte Schaftböller aus Oberalm, Salzburg.'"
         },
         "default_og_image_id": {
           "name": "default_og_image_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3) with time zone",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
         "settings_default_og_image_idx": {
           "name": "settings_default_og_image_idx",
           "columns": [
-            {
-              "expression": "default_og_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "default_og_image_id"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -5366,171 +4654,18 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraints": {}
     }
   },
-  "enums": {
-    "public.enum_products_layers_view": {
-      "name": "enum_products_layers_view",
-      "schema": "public",
-      "values": [
-        "seite",
-        "detail"
-      ]
-    },
-    "public.enum_products_base_layers_view": {
-      "name": "enum_products_base_layers_view",
-      "schema": "public",
-      "values": [
-        "seite",
-        "detail"
-      ]
-    },
-    "public.enum_products_option_groups_options_layers_view": {
-      "name": "enum_products_option_groups_options_layers_view",
-      "schema": "public",
-      "values": [
-        "seite",
-        "detail"
-      ]
-    },
-    "public.enum_products_option_groups_options_visual": {
-      "name": "enum_products_option_groups_options_visual",
-      "schema": "public",
-      "values": [
-        "none",
-        "holz-natur",
-        "holz-dunkel",
-        "holz-maser",
-        "riemen",
-        "motiv-rosette",
-        "motiv-edelweiss",
-        "motiv-eichenlaub",
-        "beschuss"
-      ]
-    },
-    "public.enum_products_option_groups_text_fonts_font": {
-      "name": "enum_products_option_groups_text_fonts_font",
-      "schema": "public",
-      "values": [
-        "antiqua",
-        "fraktur",
-        "schreibschrift",
-        "modern"
-      ]
-    },
-    "public.enum_products_option_groups_step": {
-      "name": "enum_products_option_groups_step",
-      "schema": "public",
-      "values": [
-        "modell",
-        "schaft",
-        "gestaltung",
-        "zubehoer"
-      ]
-    },
-    "public.enum_products_option_groups_kind": {
-      "name": "enum_products_option_groups_kind",
-      "schema": "public",
-      "values": [
-        "single",
-        "multi",
-        "text",
-        "accessories"
-      ]
-    },
-    "public.enum_products_type": {
-      "name": "enum_products_type",
-      "schema": "public",
-      "values": [
-        "schaftboeller",
-        "zubehoer",
-        "personalisierung"
-      ]
-    },
-    "public.enum_products_illustration": {
-      "name": "enum_products_illustration",
-      "schema": "public",
-      "values": [
-        "none",
-        "staender",
-        "hammer",
-        "ladestock"
-      ]
-    },
-    "public.enum_inquiries_status": {
-      "name": "enum_inquiries_status",
-      "schema": "public",
-      "values": [
-        "neu",
-        "in_bearbeitung",
-        "angebot",
-        "gewonnen",
-        "abgeschlossen",
-        "verloren"
-      ]
-    },
-    "public.enum_inquiries_topic": {
-      "name": "enum_inquiries_topic",
-      "schema": "public",
-      "values": [
-        "konfiguration",
-        "allgemein",
-        "sonderwunsch",
-        "verein",
-        "termin"
-      ]
-    },
-    "public.enum_faqs_category": {
-      "name": "enum_faqs_category",
-      "schema": "public",
-      "values": [
-        "allgemein",
-        "kauf",
-        "personalisierung",
-        "pflege",
-        "recht"
-      ]
-    },
-    "public.enum_users_roles": {
-      "name": "enum_users_roles",
-      "schema": "public",
-      "values": [
-        "admin",
-        "redaktion"
-      ]
-    },
-    "public.enum_settings_social_network": {
-      "name": "enum_settings_social_network",
-      "schema": "public",
-      "values": [
-        "instagram",
-        "facebook",
-        "youtube",
-        "tiktok"
-      ]
-    },
-    "public.enum_settings_vat_mode": {
-      "name": "enum_settings_vat_mode",
-      "schema": "public",
-      "values": [
-        "regel",
-        "kleinunternehmer"
-      ]
-    }
-  },
-  "schemas": {},
-  "sequences": {},
-  "roles": {},
-  "policies": {},
   "views": {},
+  "enums": {},
   "_meta": {
-    "schemas": {},
     "tables": {},
     "columns": {}
   },
-  "id": "b97c6bc2-71af-4548-8f79-6ce3ed7d9ac9",
+  "internal": {
+    "indexes": {}
+  },
+  "id": "b9d8f8cb-e289-44bc-93d7-48b422c672d0",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

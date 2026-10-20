@@ -13,17 +13,25 @@ COMPOSE="docker compose --env-file .env.production"
 mkdir -p "$BACKUP_DIR"
 
 echo "[$STAMP] Datenbank sichern …"
-$COMPOSE exec -T db pg_dump -U schaftboeller -d schaftboeller --format=custom > "$BACKUP_DIR/db_$STAMP.dump"
+# VACUUM INTO erzeugt im laufenden Betrieb eine konsistente Kopie der SQLite-Datei (inkl. WAL)
+$COMPOSE exec -T app sh -c 'rm -f /tmp/backup.db && node -e "
+  const { createClient } = require(\"@libsql/client\");
+  const db = createClient({ url: process.env.DATABASE_URL });
+  db.execute(\"VACUUM INTO '\''/tmp/backup.db'\''\").then(() => db.close(), (err) => { console.error(err); process.exit(1) });
+" && gzip -c /tmp/backup.db && rm -f /tmp/backup.db' > "$BACKUP_DIR/db_$STAMP.db.gz"
 
 echo "[$STAMP] Medien sichern …"
 $COMPOSE exec -T app tar -C /app -czf - media > "$BACKUP_DIR/media_$STAMP.tar.gz"
 
 echo "[$STAMP] Alte Sicherungen aufräumen (behalte $KEEP) …"
-ls -1t "$BACKUP_DIR"/db_*.dump 2>/dev/null | tail -n +"$((KEEP + 1))" | xargs -r rm -f
+ls -1t "$BACKUP_DIR"/db_*.db.gz 2>/dev/null | tail -n +"$((KEEP + 1))" | xargs -r rm -f
 ls -1t "$BACKUP_DIR"/media_*.tar.gz 2>/dev/null | tail -n +"$((KEEP + 1))" | xargs -r rm -f
 
 echo "[$STAMP] Fertig."
 
-# Wiederherstellen:
-#   docker compose --env-file .env.production exec -T db pg_restore -U schaftboeller -d schaftboeller --clean < db_<STAMP>.dump
-#   docker compose --env-file .env.production exec -T app tar -C /app -xzf - < media_<STAMP>.tar.gz
+# Wiederherstellen (App dafür kurz anhalten):
+#   docker compose --env-file .env.production stop app
+#   gunzip -c /var/backups/schaftboeller/db_<STAMP>.db.gz | docker compose --env-file .env.production run --rm -T --no-deps app \
+#     sh -c 'rm -f /app/data/schaftboeller.db-wal /app/data/schaftboeller.db-shm && cat > /app/data/schaftboeller.db'
+#   docker compose --env-file .env.production run --rm -T --no-deps app tar -C /app -xzf - < /var/backups/schaftboeller/media_<STAMP>.tar.gz
+#   docker compose --env-file .env.production start app

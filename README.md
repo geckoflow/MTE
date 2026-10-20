@@ -16,11 +16,11 @@ Grundlage ist das [Website-Konzept](docs/konzept/website-konzept.md). Das urspr�
 | **SEO** | Metadaten, Open-Graph-Bilder, `sitemap.xml`, `robots.txt`, strukturierte Daten (LocalBusiness, Product, FAQPage, BreadcrumbList), SEO-Felder im CMS |
 | **Datenschutz und Sicherheit** | Selbst gehostete Schriften, keine Cookies, keine Google-Dienste, optional cookielose Statistik (Plausible). Content-Security-Policy, Sicherheits-Header, Login-Sperre nach Fehlversuchen |
 | **Barrierefreiheit** | Semantisches HTML, Tastaturbedienung (auch Konfigurator-Tabs), Fokus-Rahmen, `aria-live` für Preise, „reduzierte Bewegung“ |
-| **Betrieb** | Docker-Image (Next.js standalone, läuft ohne Root-Rechte), Docker Compose mit Postgres und optionalem Caddy (HTTPS), automatische Migrationen beim Start, Health-Check, Backup-Skript, CI mit GitHub Actions |
+| **Betrieb** | Docker-Image (Next.js standalone, läuft ohne Root-Rechte), Docker Compose mit SQLite-Datenbank im Volume und optionalem Caddy (HTTPS), automatische Migrationen beim Start, Health-Check, Backup-Skript, CI mit GitHub Actions |
 
 ## Technik
 
-Next.js 16 (App Router), Payload CMS 3, PostgreSQL 16, TypeScript, Vitest, Playwright.
+Next.js 16 (App Router), Payload CMS 3, SQLite (libSQL), TypeScript, Vitest, Playwright.
 
 ```
 src/
@@ -30,7 +30,7 @@ src/
   components/           UI-Komponenten, Konfigurator
   lib/configurator/     Preis-Engine, Validierung, Codes, Illustration (isomorph, getestet)
   lib/render/           PDF und Rasterbilder (Open Graph)
-  migrations/           Datenbank-Migrationen (Postgres)
+  migrations/           Datenbank-Migrationen (SQLite)
   seed/                 Startinhalte (Beispielprodukte, Texte, FAQ, Rechtstext-Vorlagen)
 tests/unit, tests/e2e   Vitest bzw. Playwright
 docs/betrieb/           Betriebshandbuch, Redaktionsanleitung, Go-live-Checkliste
@@ -38,16 +38,18 @@ docs/betrieb/           Betriebshandbuch, Redaktionsanleitung, Go-live-Checklist
 
 ## Lokal entwickeln
 
-Voraussetzungen: Node.js ≥ 22.12 und PostgreSQL 16.
+Voraussetzungen: Node.js ≥ 22.12. Ein Datenbank-Server ist nicht nötig: Die SQLite-Datei `data/schaftboeller.db` entsteht beim ersten Start.
 
 ```bash
-cp .env.example .env          # DATABASE_URL, PAYLOAD_SECRET, SERVER_URL=http://localhost:3000 setzen
+cp .env.example .env          # PAYLOAD_SECRET und SERVER_URL=http://localhost:3000 setzen
 npm ci
 npm run dev                   # http://localhost:3000 – Schema wird lokal automatisch abgeglichen
 npm run seed                  # Startinhalte + Admin (SEED_ADMIN_EMAIL/SEED_ADMIN_PASSWORD) anlegen
 ```
 
 Admin-Oberfläche: <http://localhost:3000/admin>. Ohne Seed-Admin legt der erste Aufruf den ersten Benutzer an, er wird automatisch Administrator.
+
+Von vorne beginnen: Server stoppen und die Ordner `data/` (Datenbank) und `media/` (Uploads) löschen.
 
 | Befehl | Zweck |
 |---|---|
@@ -63,7 +65,7 @@ Admin-Oberfläche: <http://localhost:3000/admin>. Ohne Seed-Admin legt der erste
 Siehe [Betriebshandbuch](docs/betrieb/betriebshandbuch.md). Kurzfassung:
 
 ```bash
-cp .env.example .env.production   # Werte ausfüllen (PAYLOAD_SECRET, POSTGRES_PASSWORD, SERVER_URL, SMTP …)
+cp .env.example .env.production   # Werte ausfüllen (PAYLOAD_SECRET, SERVER_URL, SMTP …)
 docker compose --env-file .env.production --profile tls up -d --build
 ```
 

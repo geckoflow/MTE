@@ -21,7 +21,7 @@ ARG PLAUSIBLE_DOMAIN=""
 ARG PLAUSIBLE_SCRIPT_URL=""
 ENV PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN PLAUSIBLE_SCRIPT_URL=$PLAUSIBLE_SCRIPT_URL
 # Für den Build wird keine Datenbank benötigt (alle Inhaltsseiten werden zur Laufzeit gerendert)
-RUN DATABASE_URL=postgres://build:build@127.0.0.1:5432/build PAYLOAD_SECRET=build-only npm run build
+RUN DATABASE_URL=file:/tmp/build.db PAYLOAD_SECRET=build-only npm run build
 
 # ---- Laufzeit ----
 FROM base AS runner
@@ -29,9 +29,10 @@ WORKDIR /app
 ENV NODE_ENV=production \
     PORT=3000 \
     HOSTNAME=0.0.0.0 \
-    MEDIA_DIR=/app/media
+    MEDIA_DIR=/app/media \
+    DATABASE_URL=file:/app/data/schaftboeller.db
 RUN addgroup -S -g 1001 nodejs && adduser -S -u 1001 -G nodejs nextjs \
-  && mkdir -p /app/media && chown nextjs:nodejs /app/media
+  && mkdir -p /app/media /app/data && chown nextjs:nodejs /app/media /app/data
 
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
@@ -41,9 +42,10 @@ COPY --from=builder /app/src/seed/images ./src/seed/images
 
 USER nextjs
 EXPOSE 3000
-VOLUME ["/app/media"]
+# SQLite-Datenbank (/app/data) und Uploads (/app/media) liegen in Volumes
+VOLUME ["/app/data", "/app/media"]
 HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
   CMD wget -qO- http://127.0.0.1:3000/api/health >/dev/null || exit 1
 
-# Datenbank-Migrationen laufen beim Start automatisch (prodMigrations in payload.config.ts)
+# Die SQLite-Datei wird beim ersten Start angelegt, Migrationen laufen automatisch (prodMigrations in payload.config.ts)
 CMD ["node", "server.js"]
