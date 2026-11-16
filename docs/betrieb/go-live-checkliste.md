@@ -17,14 +17,16 @@
 - [ ] Lizenz der Widder-Grafik geklärt (Canva)
 
 ## Technik (gecko-flow)
-- [ ] Domain registriert, DNS gesetzt, `SERVER_URL`/`DOMAIN` korrekt, HTTPS aktiv (Caddy)
+- [ ] Domain registriert, DNS gesetzt, `SERVER_URL` korrekt, nginx mit Zertifikat leitet auf Port 84 weiter (inkl. `client_max_body_size 25m`)
+- [ ] GitHub: Secrets `SSH_PRIVATE_KEY`, `SSH_HOST`, `SSH_USER` im Environment `production`; erster Deploy grün
+- [ ] Server: `/htdocs/mte/.env.production` angelegt (`chmod 600`), `/htdocs/mte` wird **nicht** vom Webserver ausgeliefert, Port 84 von außen nicht erreichbar (`APP_BIND=127.0.0.1`, wenn nginx lokal läuft)
 - [ ] `PAYLOAD_SECRET` zufällig erzeugt und sicher abgelegt
 - [ ] **SMTP** eingerichtet, SPF/DKIM/DMARC für die Absender-Domain gesetzt, Testanfrage kommt an (inkl. PDF) und die Bestätigung beim Kunden ebenso
 - [ ] `SEED_ON_INIT=false`, Seed-Admin-Passwort geändert bzw. entfernt, persönliche Benutzerkonten angelegt
-- [ ] Backup-Cron aktiv, externe Kopie eingerichtet, Wiederherstellung einmal getestet
+- [ ] Backup-Cron aktiv (`/usr/local/bin/mte-backup`), externe Kopie eingerichtet, Wiederherstellung einmal getestet
 - [ ] Uptime-Monitoring auf `/api/health`
 - [ ] `SITE_NOINDEX` **nicht** gesetzt (nur auf Staging)
 - [ ] Google Search Console: Domain bestätigen, Sitemap `https://<domain>/sitemap.xml` einreichen
 - [ ] Google-Unternehmensprofil angelegt bzw. aktualisiert
 - [ ] Lighthouse mobil: Performance, Barrierefreiheit, Best Practices und SEO ≥ 95 (mit echten Fotos erneut prüfen)
-- [ ] Optional: Plausible eingerichtet (`PLAUSIBLE_DOMAIN` als Build-Argument, Datenschutzerklärung angepasst)
+- [ ] Optional: Plausible eingerichtet (`PLAUSIBLE_DOMAIN` in `.env.production` und als Repository-Variable für den Image-Build, Datenschutzerklärung angepasst)
