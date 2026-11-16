@@ -29,6 +29,35 @@ if [ ! -f "$ENV_FILE" ]; then
   exit 1
 fi
 
+# Pflichtwerte prüfen, bevor der laufende Container ersetzt wird (docker liest die Datei wörtlich:
+# keine Anführungszeichen, keine Windows-Zeilenenden)
+env_value() { grep -E "^[[:space:]]*$1=" "$ENV_FILE" | tail -n 1 | cut -d= -f2- || true; }
+problems=()
+if grep -q $'\r' "$ENV_FILE"; then
+  problems+=("Windows-Zeilenenden (CRLF). Beheben mit: sed -i 's/\\r\$//' $ENV_FILE")
+fi
+secret="$(env_value PAYLOAD_SECRET)"
+if [ -z "$secret" ] && [ ! -w "$ENV_FILE" ]; then
+  problems+=("PAYLOAD_SECRET fehlt und die Datei ist nicht beschreibbar. Selbst eintragen: PAYLOAD_SECRET=\$(openssl rand -hex 32)")
+elif [ -n "$secret" ] && [ "${#secret}" -lt 32 ]; then
+  echo "Warnung: PAYLOAD_SECRET ist kürzer als 32 Zeichen (empfohlen: openssl rand -hex 32)" >&2
+fi
+case "$(env_value SERVER_URL)" in
+  http://* | https://*) ;;
+  *) problems+=("SERVER_URL fehlt oder ist ungültig, z. B. SERVER_URL=https://schaftboeller-ebner.at (ohne Anführungszeichen)") ;;
+esac
+if [ "${#problems[@]}" -gt 0 ]; then
+  echo "Fehler in $ENV_FILE – der laufende Container bleibt unverändert:" >&2
+  printf '  - %s\n' "${problems[@]}" >&2
+  exit 1
+fi
+if [ -z "$secret" ]; then
+  # Einmalig erzeugen und dauerhaft ablegen: Ein neues Secret würde alle Anmeldungen ungültig machen
+  [ -z "$(tail -c 1 "$ENV_FILE")" ] || echo >> "$ENV_FILE"
+  echo "PAYLOAD_SECRET=$(od -An -N32 -tx1 /dev/urandom | tr -d ' \n')" >> "$ENV_FILE"
+  echo "PAYLOAD_SECRET fehlte – einmalig erzeugt und in $ENV_FILE gespeichert"
+fi
+
 if [ -n "${REGISTRY_TOKEN:-}" ]; then
   echo "$REGISTRY_TOKEN" | docker login ghcr.io -u "${REGISTRY_USER:?REGISTRY_USER fehlt}" --password-stdin >/dev/null
   trap 'docker logout ghcr.io >/dev/null 2>&1 || true' EXIT

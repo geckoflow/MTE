@@ -20,9 +20,9 @@
 - [ ] Domain registriert, DNS gesetzt, `SERVER_URL` korrekt, nginx mit Zertifikat leitet auf Port 84 weiter (inkl. `client_max_body_size 25m`)
 - [ ] GitHub: Secrets `SSH_PRIVATE_KEY`, `SSH_HOST`, `SSH_USER` im Environment `production`; erster Deploy grün
 - [ ] Server: `/htdocs/mte/.env.production` angelegt (`chmod 600`), `/htdocs/mte` wird **nicht** vom Webserver ausgeliefert, Port 84 von außen nicht erreichbar (`APP_BIND=127.0.0.1`, wenn nginx lokal läuft)
-- [ ] `PAYLOAD_SECRET` zufällig erzeugt und sicher abgelegt
+- [ ] `PAYLOAD_SECRET` gesetzt (erzeugt der erste Deploy) und zusätzlich sicher abgelegt
 - [ ] **SMTP** eingerichtet, SPF/DKIM/DMARC für die Absender-Domain gesetzt, Testanfrage kommt an (inkl. PDF) und die Bestätigung beim Kunden ebenso
-- [ ] `SEED_ON_INIT=false`, Seed-Admin-Passwort geändert bzw. entfernt, persönliche Benutzerkonten angelegt
+- [ ] **Startpasswort des Administrators geändert**, `SEED_ON_INIT=false`, persönliche Benutzerkonten angelegt
 - [ ] Backup-Cron aktiv (`/usr/local/bin/mte-backup`), externe Kopie eingerichtet, Wiederherstellung einmal getestet
 - [ ] Uptime-Monitoring auf `/api/health`
 - [ ] `SITE_NOINDEX` **nicht** gesetzt (nur auf Staging)

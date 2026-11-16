@@ -6,7 +6,9 @@ export async function GET() {
     const payload = await getPayloadClient()
     await payload.count({ collection: 'products' })
     return Response.json({ ok: true }, { headers: { 'Cache-Control': 'no-store' } })
-  } catch {
+  } catch (err) {
+    // Ohne diese Zeile zeigt ein fehlgeschlagener Deploy nur „unhealthy“, aber nicht den Grund
+    console.error('Health-Check fehlgeschlagen:', err instanceof Error ? err.message : err)
     return Response.json({ ok: false }, { status: 503, headers: { 'Cache-Control': 'no-store' } })
   }
 }
