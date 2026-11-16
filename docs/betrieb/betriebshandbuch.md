@@ -68,7 +68,7 @@ Einmalig, danach deployt die Pipeline bei jedem Merge auf `main`:
 sudo mkdir -p /htdocs/mte
 sudo cp .env.example /htdocs/mte/.env.production   # Vorlage aus dem Repository
 sudo chmod 600 /htdocs/mte/.env.production
-# ausfüllen: SERVER_URL, SMTP_*, MAIL_FROM_*, TRUSTED_PROXY_HOPS; für Beispielinhalte beim ersten Start SEED_ON_INIT=true
+# ausfüllen: SERVER_URL, SMTP_*, MAIL_FROM_*, TRUSTED_PROXY_HOPS
 # PAYLOAD_SECRET darf leer bleiben: Der erste Deploy erzeugt ihn und trägt ihn in die Datei ein
 ```
 
@@ -76,7 +76,8 @@ sudo chmod 600 /htdocs/mte/.env.production
 - Port 84 sollte von außen nicht erreichbar sein: Wer direkt zugreift, umgeht HTTPS und kann die Client-IP für das Rate-Limit fälschen. Läuft nginx auf demselben Server, die Variable `APP_BIND=127.0.0.1` setzen. Eine Firewall-Regel (ufw) allein reicht nicht, weil Docker veröffentlichte Ports an ufw vorbei freigibt.
 - `data/` und `media/` legt der Deploy selbst an und gibt sie uid 1001.
 - **Startzugang:** Beim ersten Start mit leerer Datenbank legt das Backend den Administrator `admin@schaftboeller-ebner.at` mit dem Passwort `Schaftboeller2026!` an. Das Passwort steht im Repository und ist für jeden mit Zugriff darauf bekannt: **direkt nach der ersten Anmeldung unter `/admin/account` ändern** (dort lässt sich auch die E-Mail-Adresse ändern). Abweichende Werte über `SEED_ADMIN_EMAIL`/`SEED_ADMIN_PASSWORD`. Gibt es bereits Benutzer, passiert nichts.
-- Nach dem ersten erfolgreichen Deploy `SEED_ON_INIT=false` setzen. Änderungen an `.env.production` wirken beim nächsten Deploy. Sofort: in GitHub unter Actions im letzten Lauf den Job „Deploy nach Production“ erneut ausführen (`docker restart mte` liest die Datei nicht neu ein).
+- **Startinhalte:** Solange es keinen Schaftböller gibt, füllt jeder Start die Website mit Beispielprodukten, Zubehör, Texten, Platzhalterbildern, Galerie, FAQ und Rechtstext-Vorlagen. Bereits vorhandene Einträge werden übersprungen; Einstellungen, Startseite und Handwerk-Seite nur befüllt, wenn sie noch nie gespeichert wurden. Bearbeitete Inhalte bleiben also immer erhalten.
+- Änderungen an `.env.production` wirken beim nächsten Deploy. Sofort: in GitHub unter Actions im letzten Lauf den Job „Deploy nach Production“ erneut ausführen (`docker restart mte` liest die Datei nicht neu ein).
 - DNS: A/AAAA-Einträge für die Domain und `www.` auf den Server.
 
 nginx (Ausschnitt). Läuft nginx auf einem anderen Server, statt `127.0.0.1` dessen Adresse zum App-Server eintragen:

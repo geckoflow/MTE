@@ -4,8 +4,8 @@ import { ContactForm } from './ContactForm'
 
 export function ContactSection({
   settings,
-  heading = 'Lass uns',
-  accent = 'reden.',
+  heading,
+  accent,
   lead,
   defaultTopic,
   defaultMessage,
@@ -24,10 +24,10 @@ export function ContactSection({
   return (
     <section className="section contact" id="kontakt" aria-labelledby="kontakt-h">
       <div className="wrap">
-        <Tag className="h-xl" id="kontakt-h">
-          {heading}
+        <Tag className="h-xl contact-title" id="kontakt-h">
+          {heading || 'Lass uns'}
           <br />
-          {accent}
+          {accent || 'reden.'}
         </Tag>
         <div className="contact-grid">
           <div className="contact-info reveal">

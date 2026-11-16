@@ -23,7 +23,7 @@ import { Homepage } from './globals/Homepage'
 import { Settings } from './globals/Settings'
 import { SERVER_URL } from './lib/env'
 import { migrations } from './migrations'
-import { ensureAdmin, seed } from './seed/seed'
+import { seed } from './seed/seed'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -126,10 +126,8 @@ export default buildConfig({
   sharp,
   plugins,
   onInit: async (payload) => {
-    // Immer: Ohne Benutzer könnte sich sonst der erste Besucher von /admin selbst zum Administrator machen
-    await ensureAdmin(payload)
-    if (process.env.SEED_ON_INIT === 'true') {
-      await seed(payload, { onlyIfEmpty: true })
-    }
+    // Leeres Backend: Administrator mit Startzugang (sonst könnte sich der erste Besucher von /admin selbst
+    // anlegen) und Startinhalte mit Bildern und Texten, damit die Website vollständig ist
+    await seed(payload, { onlyIfEmpty: true })
   },
 })

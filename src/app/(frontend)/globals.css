@@ -1290,7 +1290,7 @@ html:not(.js) .intro,
 .contact {
   background: linear-gradient(90deg, var(--white) 0 50%, var(--black) 50% 100%);
 }
-.contact h2 {
+.contact-title {
   color: #fff;
   mix-blend-mode: difference;
   font-size: clamp(2.4rem, 7vw, 7rem);
@@ -1541,7 +1541,7 @@ html:not(.js) .intro,
   .contact {
     background: var(--black);
   }
-  .contact h2 {
+  .contact-title {
     mix-blend-mode: normal;
   }
   .contact-grid {
