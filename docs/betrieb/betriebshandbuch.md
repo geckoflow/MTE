@@ -39,7 +39,7 @@ flowchart LR
 | Secret | Inhalt |
 |---|---|
 | `SSH_PRIVATE_KEY` | privater Schlüssel des Deploy-Benutzers |
-| `SSH_HOST` | Server |
+| `SSH_HOST` | öffentlicher Name oder IP-Adresse des Servers, z. B. `server.example.at` (kein interner Name, kein `https://`) |
 | `SSH_USER` | Benutzer auf dem Server, darf `docker` ausführen |
 
 Fehlen die Secrets, überspringt die Pipeline den Deploy mit einer Warnung; das Image liegt trotzdem in GHCR. Die Anmeldung an GHCR (Push und Pull) läuft über den automatischen `GITHUB_TOKEN`, dafür ist nichts einzustellen.
@@ -49,11 +49,14 @@ Optionale Variablen (Settings → Secrets and variables → Actions → Variable
 | Variable | Standard | Wofür |
 |---|---|---|
 | `APP_PORT` | `84` | Port auf dem Server |
+| `SSH_PORT` | `22` | SSH-Port des Servers, falls abweichend |
 | `APP_BIND` | leer (alle Adressen, wie aquaconfig) | `127.0.0.1`, wenn nginx auf demselben Server läuft: Port 84 ist dann von außen nicht erreichbar |
 | `APP_DIR` | `/htdocs/mte` | Datenverzeichnis auf dem Server |
 | `PLAUSIBLE_DOMAIN`, `PLAUSIBLE_SCRIPT_URL` | leer | nur für Plausible-Statistik: fließen beim Image-Build in die Content-Security-Policy ein |
 
 Alles andere (`PAYLOAD_SECRET`, `SERVER_URL`, SMTP …) steht nicht in GitHub, sondern in `/htdocs/mte/.env.production` auf dem Server.
+
+**Fehlersuche:** Meldet „SSH vorbereiten“ *SSH_HOST nicht auflösbar*, kennt das öffentliche DNS den Namen nicht. Die Meldung nennt den Grund (z. B. interner Servername ohne Domain). Leerzeichen, `user@host`, `ssh://` und `host:port` im Secret bereinigt die Pipeline selbst.
 
 **Rollback:** In GitHub unter Actions den Lauf eines älteren Stands öffnen und den Job „Deploy nach Production“ erneut ausführen. Oder auf dem Server: `deploy.sh ghcr.io/geckoflow/mte:<tag>`.
 
