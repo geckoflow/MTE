@@ -16,7 +16,7 @@ Grundlage ist das [Website-Konzept](docs/konzept/website-konzept.md). Das urspr�
 | **SEO** | Metadaten, Open-Graph-Bilder, `sitemap.xml`, `robots.txt`, strukturierte Daten (LocalBusiness, Product, FAQPage, BreadcrumbList), SEO-Felder im CMS |
 | **Datenschutz und Sicherheit** | Selbst gehostete Schriften, keine Cookies, keine Google-Dienste, optional cookielose Statistik (Plausible). Content-Security-Policy, Sicherheits-Header, Login-Sperre nach Fehlversuchen |
 | **Barrierefreiheit** | Semantisches HTML, Tastaturbedienung (auch Konfigurator-Tabs), Fokus-Rahmen, `aria-live` für Preise, „reduzierte Bewegung“ |
-| **Betrieb** | Docker-Image (Next.js standalone, läuft ohne Root-Rechte), Docker Compose mit SQLite-Datenbank im Volume und optionalem Caddy (HTTPS), automatische Migrationen beim Start, Health-Check, Backup-Skript, CI mit GitHub Actions |
+| **Betrieb** | CI/CD mit GitHub Actions wie bei aquaconfig: Tests, Docker-Image nach GHCR, Deploy per SSH auf den Server (Container `mte`, Port 84, Daten in `/htdocs/mte`, HTTPS über nginx). Image läuft ohne Root-Rechte, automatische Migrationen beim Start, Health-Check, Backup-Skript |
 
 ## Technik
 
@@ -62,11 +62,12 @@ Von vorne beginnen: Server stoppen und die Ordner `data/` (Datenbank) und `media
 
 ## Betrieb
 
-Siehe [Betriebshandbuch](docs/betrieb/betriebshandbuch.md). Kurzfassung:
+Siehe [Betriebshandbuch](docs/betrieb/betriebshandbuch.md). Kurzfassung: Merge auf `main` → die Pipeline testet, baut das Image `ghcr.io/geckoflow/mte` und startet auf dem Server den Container `mte` neu:
 
 ```bash
-cp .env.example .env.production   # Werte ausfüllen (PAYLOAD_SECRET, SERVER_URL, SMTP …)
-docker compose --env-file .env.production --profile tls up -d --build
+docker run -d --name mte --restart unless-stopped -p 84:3000 -v /htdocs/mte:/htdocs/mte ghcr.io/geckoflow/mte:<tag>
 ```
+
+Einzustellen sind in GitHub nur die Secrets `SSH_PRIVATE_KEY`, `SSH_HOST` und `SSH_USER` (Environment `production`), auf dem Server die Datei `/htdocs/mte/.env.production`.
 
 Vor dem Go-live: [Go-live-Checkliste](docs/betrieb/go-live-checkliste.md). Für David: [Redaktionsanleitung](docs/betrieb/redaktion.md).
