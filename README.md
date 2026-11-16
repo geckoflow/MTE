@@ -44,10 +44,10 @@ Voraussetzungen: Node.js ≥ 22.12. Ein Datenbank-Server ist nicht nötig: Die S
 cp .env.example .env          # PAYLOAD_SECRET und SERVER_URL=http://localhost:3000 setzen
 npm ci
 npm run dev                   # http://localhost:3000 – Schema wird lokal automatisch abgeglichen
-npm run seed                  # Startinhalte + Admin (SEED_ADMIN_EMAIL/SEED_ADMIN_PASSWORD) anlegen
+npm run seed                  # Startinhalte anlegen
 ```
 
-Admin-Oberfläche: <http://localhost:3000/admin>. Ohne Seed-Admin legt der erste Aufruf den ersten Benutzer an, er wird automatisch Administrator.
+Admin-Oberfläche: <http://localhost:3000/admin>. Ist die Datenbank leer, legt der erste Start den Administrator `admin@schaftboeller-ebner.at` mit dem Startpasswort `Schaftboeller2026!` an (oder `SEED_ADMIN_EMAIL`/`SEED_ADMIN_PASSWORD`).
 
 Von vorne beginnen: Server stoppen und die Ordner `data/` (Datenbank) und `media/` (Uploads) löschen.
 

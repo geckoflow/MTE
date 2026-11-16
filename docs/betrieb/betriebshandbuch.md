@@ -56,7 +56,7 @@ Optionale Variablen (Settings → Secrets and variables → Actions → Variable
 
 Alles andere (`PAYLOAD_SECRET`, `SERVER_URL`, SMTP …) steht nicht in GitHub, sondern in `/htdocs/mte/.env.production` auf dem Server.
 
-**Fehlersuche:** Meldet „SSH vorbereiten“ *SSH_HOST nicht auflösbar*, kennt das öffentliche DNS den Namen nicht. Die Meldung nennt den Grund (z. B. interner Servername ohne Domain). Leerzeichen, `user@host`, `ssh://` und `host:port` im Secret bereinigt die Pipeline selbst.
+**Fehlersuche:** Meldet „SSH vorbereiten“ *SSH_HOST nicht auflösbar*, kennt das öffentliche DNS den Namen nicht. Die Meldung nennt den Grund (z. B. interner Servername ohne Domain). Leerzeichen, `user@host`, `ssh://` und `host:port` im Secret bereinigt die Pipeline selbst. Meldet der Deploy *Fehler in /htdocs/mte/.env.production*, ist dort etwas ungültig (z. B. `SERVER_URL` fehlt oder steht in Anführungszeichen, Windows-Zeilenenden); der laufende Container bleibt dann unverändert. Den Grund für „Container wurde nicht gesund“ zeigt das Log darunter (Zeile *Health-Check fehlgeschlagen*).
 
 **Rollback:** In GitHub unter Actions den Lauf eines älteren Stands öffnen und den Job „Deploy nach Production“ erneut ausführen. Oder auf dem Server: `deploy.sh ghcr.io/geckoflow/mte:<tag>`.
 
@@ -68,14 +68,15 @@ Einmalig, danach deployt die Pipeline bei jedem Merge auf `main`:
 sudo mkdir -p /htdocs/mte
 sudo cp .env.example /htdocs/mte/.env.production   # Vorlage aus dem Repository
 sudo chmod 600 /htdocs/mte/.env.production
-openssl rand -hex 32                                 # → PAYLOAD_SECRET
-# ausfüllen: SERVER_URL, SMTP_*, MAIL_FROM_*, TRUSTED_PROXY_HOPS, beim ersten Start SEED_ON_INIT=true + SEED_ADMIN_*
+# ausfüllen: SERVER_URL, SMTP_*, MAIL_FROM_*, TRUSTED_PROXY_HOPS; für Beispielinhalte beim ersten Start SEED_ON_INIT=true
+# PAYLOAD_SECRET darf leer bleiben: Der erste Deploy erzeugt ihn und trägt ihn in die Datei ein
 ```
 
 - nginx für die Domain einrichten (Zertifikate wie bei den anderen Seiten), siehe unten. In `.env.production` `TRUSTED_PROXY_HOPS=1` lassen.
 - Port 84 sollte von außen nicht erreichbar sein: Wer direkt zugreift, umgeht HTTPS und kann die Client-IP für das Rate-Limit fälschen. Läuft nginx auf demselben Server, die Variable `APP_BIND=127.0.0.1` setzen. Eine Firewall-Regel (ufw) allein reicht nicht, weil Docker veröffentlichte Ports an ufw vorbei freigibt.
 - `data/` und `media/` legt der Deploy selbst an und gibt sie uid 1001.
-- Nach dem ersten erfolgreichen Deploy `SEED_ON_INIT=false` setzen und `SEED_ADMIN_PASSWORD` aus der Datei entfernen. Danach unter `/admin/account` ein eigenes Passwort setzen. Änderungen an `.env.production` wirken beim nächsten Deploy (oder sofort mit `deploy.sh ghcr.io/geckoflow/mte:latest` auf dem Server).
+- **Startzugang:** Beim ersten Start mit leerer Datenbank legt das Backend den Administrator `admin@schaftboeller-ebner.at` mit dem Passwort `Schaftboeller2026!` an. Das Passwort steht im Repository und ist für jeden mit Zugriff darauf bekannt: **direkt nach der ersten Anmeldung unter `/admin/account` ändern** (dort lässt sich auch die E-Mail-Adresse ändern). Abweichende Werte über `SEED_ADMIN_EMAIL`/`SEED_ADMIN_PASSWORD`. Gibt es bereits Benutzer, passiert nichts.
+- Nach dem ersten erfolgreichen Deploy `SEED_ON_INIT=false` setzen. Änderungen an `.env.production` wirken beim nächsten Deploy. Sofort: in GitHub unter Actions im letzten Lauf den Job „Deploy nach Production“ erneut ausführen (`docker restart mte` liest die Datei nicht neu ein).
 - DNS: A/AAAA-Einträge für die Domain und `www.` auf den Server.
 
 nginx (Ausschnitt). Läuft nginx auf einem anderen Server, statt `127.0.0.1` dessen Adresse zum App-Server eintragen:

@@ -8,18 +8,21 @@ const IMAGES_DIR = process.env.SEED_IMAGES_DIR || path.join(process.cwd(), 'src'
 
 type SeedOptions = { onlyIfEmpty?: boolean }
 
-/** Admin aus Umgebungsvariablen – nur wenn es noch gar keinen Benutzer gibt */
-async function ensureAdmin(payload: Payload) {
-  const email = process.env.SEED_ADMIN_EMAIL
-  const password = process.env.SEED_ADMIN_PASSWORD
-  if (!email || !password) return
+/** Startzugang für das leere Backend – das Passwort wird nach der ersten Anmeldung geändert */
+export const DEFAULT_ADMIN_EMAIL = 'admin@schaftboeller-ebner.at'
+export const DEFAULT_ADMIN_PASSWORD = 'Schaftboeller2026!'
+
+/** Legt den Administrator an, solange es noch gar keinen Benutzer gibt (SEED_ADMIN_* ersetzen den Startzugang) */
+export async function ensureAdmin(payload: Payload) {
   const { totalDocs } = await payload.count({ collection: 'users' })
   if (totalDocs > 0) return
+  const email = process.env.SEED_ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL
+  const password = process.env.SEED_ADMIN_PASSWORD || DEFAULT_ADMIN_PASSWORD
   await payload.create({
     collection: 'users',
     data: { email, password, name: 'Administrator', roles: ['admin'] },
   })
-  payload.logger.info(`Seed: Admin-Benutzer ${email} angelegt.`)
+  payload.logger.warn(`Seed: Administrator ${email} mit Startpasswort angelegt – nach der ersten Anmeldung unter /admin/account ändern.`)
 }
 
 const exists = async (payload: Payload, collection: 'products' | 'faqs' | 'legal-pages', field: string, value: string) =>
