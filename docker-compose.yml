@@ -1,0 +1,46 @@
+# Schaftböller Ebner – Betrieb mit Docker Compose
+#
+#   cp .env.example .env.production   # Werte ausfüllen
+#   docker compose --env-file .env.production up -d --build
+#   # mit automatischem HTTPS (Caddy): docker compose --env-file .env.production --profile tls up -d --build
+#
+services:
+  app:
+    build:
+      context: .
+      args:
+        PLAUSIBLE_DOMAIN: ${PLAUSIBLE_DOMAIN:-}
+        PLAUSIBLE_SCRIPT_URL: ${PLAUSIBLE_SCRIPT_URL:-}
+    image: schaftboeller-ebner:latest
+    restart: unless-stopped
+    env_file: .env.production
+    environment:
+      # SQLite-Datenbank im Volume „data“ (eine Datei, keine eigene Datenbank-Instanz)
+      DATABASE_URL: file:/app/data/schaftboeller.db
+    ports:
+      - '127.0.0.1:3000:3000'
+    volumes:
+      - data:/app/data
+      - media:/app/media
+
+  caddy:
+    image: caddy:2-alpine
+    profiles: ['tls']
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      DOMAIN: ${DOMAIN:-schaftboeller-ebner.at}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+
+volumes:
+  data:
+  media:
+  caddy_data:
+  caddy_config:
