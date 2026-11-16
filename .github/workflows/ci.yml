@@ -193,11 +193,53 @@ jobs:
 
       - name: SSH vorbereiten
         if: steps.access.outputs.ready == 'true'
+        env:
+          SSH_PORT: ${{ vars.SSH_PORT || '22' }}
         run: |
+          # Secrets bereinigen: Leerzeichen und Zeilenumbrüche, ssh://, user@host, host:port
+          host="$(printf '%s' "$SSH_HOST" | tr -d '[:space:]')"
+          [ "$host" = "$SSH_HOST" ] || echo "::notice::SSH_HOST enthielt Leerzeichen oder Zeilenumbrüche – entfernt"
+          host="${host#ssh://}"
+          host="${host%%/*}"
+          user="$(printf '%s' "$SSH_USER" | tr -d '[:space:]')"
+          port="$SSH_PORT"
+          if [[ "$host" == *@* ]]; then
+            echo "::notice::SSH_HOST enthielt einen Benutzer (user@host) – abgetrennt"
+            [ -n "$user" ] || user="${host%%@*}"
+            host="${host#*@}"
+          fi
+          if [[ "$host" =~ ^([^:]+):([0-9]+)$ ]]; then
+            echo "::notice::Port aus SSH_HOST übernommen"
+            host="${BASH_REMATCH[1]}"
+            port="${BASH_REMATCH[2]}"
+          fi
+          # Die bereinigten Werte weichen vom Secret ab und würden sonst im Log stehen
+          echo "::add-mask::$host"
+          echo "::add-mask::$user"
+
+          if ! getent ahosts "$host" >/dev/null; then
+            reason="Der Name ist im öffentlichen DNS nicht auflösbar."
+            if [[ "$host" != *.* ]]; then
+              reason="SSH_HOST enthält keinen Punkt – vermutlich ein interner Servername. Nötig ist der öffentliche Name oder die IP-Adresse (wie bei aquaconfig)."
+            elif command -v dig >/dev/null; then
+              case "$(dig +noall +comments "$host" 2>/dev/null | sed -n 's/.*status: \([A-Z]*\).*/\1/p' | head -n1)" in
+                NXDOMAIN) reason="Diesen Namen gibt es im DNS nicht (NXDOMAIN): Tippfehler oder ein nur intern bekannter Name?" ;;
+                SERVFAIL) reason="Der DNS-Server der Domain antwortet fehlerhaft (SERVFAIL). Das träfe auch aquaconfig." ;;
+              esac
+            fi
+            echo "::error title=SSH_HOST nicht auflösbar::$reason Bitte das Secret SSH_HOST im Environment production prüfen."
+            exit 1
+          fi
+
           mkdir -p ~/.ssh
           printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_deploy
           chmod 600 ~/.ssh/id_deploy
-          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+          ssh-keyscan -T 15 -p "$port" -H "$host" >> ~/.ssh/known_hosts
+          {
+            echo "DEPLOY_HOST=$host"
+            echo "DEPLOY_USER=$user"
+            echo "DEPLOY_PORT=$port"
+          } >> "$GITHUB_ENV"
 
       - name: Container auf dem Server neu starten
         if: steps.access.outputs.ready == 'true'
@@ -215,4 +257,4 @@ jobs:
             printf 'export REGISTRY_USER=%q REGISTRY_TOKEN=%q APP_DIR=%q APP_PORT=%q APP_BIND=%q\n' \
               "$REGISTRY_USER" "$REGISTRY_TOKEN" "$APP_DIR" "$APP_PORT" "$APP_BIND"
             cat deploy/deploy.sh
-          } | ssh -i ~/.ssh/id_deploy "$SSH_USER@$SSH_HOST" bash -s -- "$IMAGE"
+          } | ssh -i ~/.ssh/id_deploy -p "$DEPLOY_PORT" "$DEPLOY_USER@$DEPLOY_HOST" bash -s -- "$IMAGE"
