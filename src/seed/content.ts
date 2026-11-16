@@ -293,6 +293,16 @@ export const mainProduct = (img: Record<ImageKey, number>, accessoryIds: Record<
   ],
 })
 
+/** Beispiel-Unikate für die Galerie (Platzhalterbilder, vor dem Go-live durch eigene Fotos ersetzen) */
+export const gallery: { title: string; image: ImageKey; description: string; year: number }[] = [
+  { title: 'Ornament-Schnitzerei', image: 'schnitzerei', description: 'Von Hand geschnitztes Ornament in Nussholz', year: 2026 },
+  { title: 'Holz trifft Edelstahl', image: 'detail', description: 'Übergang von geöltem Nussholz zu poliertem Edelstahl', year: 2026 },
+  { title: 'Ausgesuchte Maserung', image: 'nussholz', description: 'Besonders lebhaftes Nussholz, natur geölt', year: 2025 },
+  { title: 'Traditioneller Lederriemen', image: 'lederriemen', description: 'Handgenähter Riemen in Rot', year: 2025 },
+  { title: 'Kerbschnitt-Rosette', image: 'schnitzen', description: 'Klassische Rosette, von Hand geschnitzt', year: 2025 },
+  { title: 'Aus der Werkstatt', image: 'werkstatt', description: 'Schaft in Arbeit, Oberalm', year: 2024 },
+]
+
 export const faqs = [
   {
     question: 'Wer darf einen Schaftböller kaufen?',

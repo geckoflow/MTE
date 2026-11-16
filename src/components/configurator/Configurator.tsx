@@ -695,8 +695,11 @@ function InquiryButton({
               <input id="r-website" name="website" tabIndex={-1} autoComplete="off" />
             </div>
             <label className="check">
-              <input type="checkbox" name="consent" required /> Ich habe die <Link href="/datenschutz" target="_blank">Datenschutzerklärung</Link>&nbsp;gelesen
-              und bin mit der Verarbeitung meiner Angaben einverstanden.
+              <input type="checkbox" name="consent" required />
+              <span>
+                Ich habe die <Link href="/datenschutz" target="_blank">Datenschutzerklärung</Link> gelesen und bin mit der Verarbeitung
+                meiner Angaben einverstanden.
+              </span>
             </label>
             {state.kind === 'error' && (
               <p className="form-status error" role="alert">

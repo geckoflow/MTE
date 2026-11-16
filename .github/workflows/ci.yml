@@ -42,7 +42,6 @@ jobs:
       DATABASE_URL: file:${{ github.workspace }}/data/ci.db
       PAYLOAD_SECRET: ci-secret-0123456789abcdef0123456789abcdef
       SERVER_URL: http://localhost:3000
-      SEED_ON_INIT: 'true'
       SEED_ADMIN_EMAIL: admin@example.com
       SEED_ADMIN_PASSWORD: ci-admin-passwort
       RATE_LIMIT_INQUIRIES: '100'

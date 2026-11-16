@@ -13,7 +13,7 @@ export const DEFAULT_ADMIN_EMAIL = 'admin@schaftboeller-ebner.at'
 export const DEFAULT_ADMIN_PASSWORD = 'Schaftboeller2026!'
 
 /** Legt den Administrator an, solange es noch gar keinen Benutzer gibt (SEED_ADMIN_* ersetzen den Startzugang) */
-export async function ensureAdmin(payload: Payload) {
+async function ensureAdmin(payload: Payload) {
   const { totalDocs } = await payload.count({ collection: 'users' })
   if (totalDocs > 0) return
   const email = process.env.SEED_ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL
@@ -114,9 +114,16 @@ export async function seed(payload: Payload, { onlyIfEmpty = false }: SeedOption
     if (!(await exists(payload, 'legal-pages', 'slug', page.slug))) await payload.create({ collection: 'legal-pages', data: page })
   }
 
-  await payload.updateGlobal({ slug: 'settings', data: content.settings })
-  await payload.updateGlobal({ slug: 'homepage', data: content.homepage(img) as never })
-  await payload.updateGlobal({ slug: 'craft', data: content.craft(img) as never })
+  for (const [i, item] of content.gallery.entries()) {
+    if ((await payload.count({ collection: 'gallery', where: { title: { equals: item.title } } })).totalDocs > 0) continue
+    await payload.create({ collection: 'gallery', data: { ...item, image: img[item.image], sortOrder: (i + 1) * 10 } })
+  }
+
+  // Einstellungen und Seitentexte nur füllen, solange sie nie gespeichert wurden – Änderungen bleiben unangetastet
+  const neverSaved = async (slug: 'settings' | 'homepage' | 'craft') => !(await payload.findGlobal({ slug, depth: 0 })).updatedAt
+  if (await neverSaved('settings')) await payload.updateGlobal({ slug: 'settings', data: content.settings })
+  if (await neverSaved('homepage')) await payload.updateGlobal({ slug: 'homepage', data: content.homepage(img) as never })
+  if (await neverSaved('craft')) await payload.updateGlobal({ slug: 'craft', data: content.craft(img) as never })
 
   if (!(await exists(payload, 'products', 'slug', 'klassik-20'))) {
     await payload.create({ collection: 'products', data: content.mainProduct(img, accessoryIds) as never })

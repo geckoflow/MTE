@@ -95,9 +95,11 @@ export function ContactForm({
         <input id="c-website" name="website" tabIndex={-1} autoComplete="off" />
       </div>
       <label className="check">
-        <input type="checkbox" name="consent" required /> Ich habe die{' '}
-        <Link href="/datenschutz">Datenschutzerklärung</Link>&nbsp;gelesen und bin mit der Verarbeitung meiner Angaben zur
-        Beantwortung einverstanden.
+        <input type="checkbox" name="consent" required />
+        <span>
+          Ich habe die <Link href="/datenschutz">Datenschutzerklärung</Link> gelesen und bin mit der Verarbeitung meiner Angaben zur
+          Beantwortung einverstanden.
+        </span>
       </label>
       {note && <p className="muted" style={{ fontSize: '.8rem', marginBottom: 16 }}>{note}</p>}
       <button className="btn btn-light" type="submit" disabled={status.kind === 'sending'}>

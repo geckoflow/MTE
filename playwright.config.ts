@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
 /**
- * End-to-End-Tests gegen eine laufende Instanz mit Startinhalten (SEED_ON_INIT=true bzw. `npm run seed`).
+ * End-to-End-Tests gegen eine laufende Instanz mit Startinhalten (füllt sich beim ersten Start selbst).
  * Lokal: läuft gegen einen vorhandenen Server auf :3000, sonst wird `npm run start` gestartet.
  */
 const baseURL = process.env.E2E_BASE_URL || 'http://localhost:3000'
