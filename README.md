@@ -69,4 +69,6 @@ docker run -d --name mte --restart unless-stopped -p 84:3000 -v /htdocs/mte:/htd
 
 Einzustellen sind in GitHub nur die Secrets `SSH_PRIVATE_KEY`, `SSH_HOST` und `SSH_USER` (Environment `production`), auf dem Server die Datei `/htdocs/mte/.env.production`.
 
+Bis zum Go-live ist die Website passwortgeschützt und für Suchmaschinen gesperrt (Vorschau-Schutz, Passwort `Schaftboeller-Vorschau` oder `SITE_PASSWORD`). Zum Go-live `SITE_PUBLIC=true` setzen.
+
 Vor dem Go-live: [Go-live-Checkliste](docs/betrieb/go-live-checkliste.md). Für David: [Redaktionsanleitung](docs/betrieb/redaktion.md).

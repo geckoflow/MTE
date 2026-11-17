@@ -4,11 +4,12 @@ import type { Media, Product, Setting } from '@/payload-types'
 
 import { SERVER_URL } from './env'
 import { absoluteUrl, mediaUrl } from './media'
+import { previewPassword } from './preview'
 
 export const SITE_URL = SERVER_URL
 
-/** Staging/Vorschau-Umgebungen nicht indexieren */
-export const noIndex = process.env.SITE_NOINDEX === 'true'
+/** Nicht indexieren: Staging (SITE_NOINDEX) und solange der Vorschau-Schutz aktiv ist */
+export const noIndex = process.env.SITE_NOINDEX === 'true' || previewPassword() !== null
 
 type Meta = { title?: string | null; description?: string | null; image?: number | Media | null }
 

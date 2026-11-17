@@ -46,6 +46,8 @@ jobs:
       SEED_ADMIN_PASSWORD: ci-admin-passwort
       RATE_LIMIT_INQUIRIES: '100'
       PAYLOAD_DB_PUSH: 'false'
+      # E2E prüft die öffentliche Website; der Vorschau-Schutz hat eigene Unit-Tests
+      SITE_PUBLIC: 'true'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
