@@ -25,7 +25,7 @@
 - [ ] **Startpasswort des Administrators geändert**, persönliche Benutzerkonten angelegt
 - [ ] Backup-Cron aktiv (`/usr/local/bin/mte-backup`), externe Kopie eingerichtet, Wiederherstellung einmal getestet
 - [ ] Uptime-Monitoring auf `/api/health`
-- [ ] `SITE_NOINDEX` **nicht** gesetzt (nur auf Staging)
+- [ ] **`SITE_PUBLIC=true`** in `/htdocs/mte/.env.production` (hebt Passwort und Suchmaschinen-Sperre auf), Deploy erneut ausführen; `SITE_NOINDEX` **nicht** gesetzt
 - [ ] Google Search Console: Domain bestätigen, Sitemap `https://<domain>/sitemap.xml` einreichen
 - [ ] Google-Unternehmensprofil angelegt bzw. aktualisiert
 - [ ] Lighthouse mobil: Performance, Barrierefreiheit, Best Practices und SEO ≥ 95 (mit echten Fotos erneut prüfen)

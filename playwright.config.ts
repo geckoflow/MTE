@@ -18,6 +18,8 @@ export default defineConfig({
     locale: 'de-AT',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
+    // Gegen eine Instanz mit Vorschau-Schutz (Passwort) testen
+    httpCredentials: process.env.E2E_SITE_PASSWORD ? { username: 'e2e', password: process.env.E2E_SITE_PASSWORD } : undefined,
   },
   projects: [
     {

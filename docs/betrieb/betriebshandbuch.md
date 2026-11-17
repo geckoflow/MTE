@@ -124,7 +124,8 @@ Alle Variablen sind in [`.env.example`](../../.env.example) beschrieben. Zu beac
 | `DATABASE_URL`, `MEDIA_DIR` | Setzt der Deploy fest auf `/htdocs/mte/data/schaftboeller.db` und `/htdocs/mte/media`; Werte in `.env.production` werden überschrieben |
 | `PAYLOAD_SECRET` | Nie ändern, sonst werden alle Anmeldungen ungültig |
 | `SMTP_*` | Ohne `SMTP_HOST` werden E-Mails nur ins Log geschrieben |
-| `SITE_NOINDEX=true` | Für Staging: `robots.txt` sperrt alles, Seiten sind `noindex` |
+| `SITE_PUBLIC`, `SITE_PASSWORD` | **Vorschau-Schutz:** Bis zum Go-live verlangt die Website ein Passwort (Benutzername beliebig) und ist für Suchmaschinen gesperrt (`robots.txt` sperrt alles, `noindex`). Ohne `SITE_PASSWORD` gilt `Schaftboeller-Vorschau`. Offen bleiben nur `/robots.txt` und `/api/health`. **Zum Go-live `SITE_PUBLIC=true` setzen.** Lokal (`npm run dev`) ist der Schutz aus |
+| `SITE_NOINDEX=true` | Für Staging: `robots.txt` sperrt alles, Seiten sind `noindex` (auch ohne Passwort) |
 | `PLAUSIBLE_DOMAIN`, `PLAUSIBLE_SCRIPT_URL` | Zur Laufzeit in `.env.production` (Skript-Tag) **und** als Repository-Variablen für den Image-Build (Content-Security-Policy) |
 | `RATE_LIMIT_INQUIRIES` | Anfragen pro IP in 10 Minuten (Standard 5) |
 | `TRUSTED_PROXY_HOPS` | Anzahl der Reverse-Proxys vor der App (Standard 1 = nginx). Bestimmt, welcher Eintrag aus `X-Forwarded-For` als Client-IP gilt. nginx muss `X-Forwarded-For` anhängen (`$proxy_add_x_forwarded_for`) |
